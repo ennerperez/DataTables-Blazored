@@ -1,0 +1,10 @@
+﻿@inject ITableService _tableService
+
+<CascadingValue Value="@_tableService">
+    <BlazoredTable />
+    @ChildContent
+</CascadingValue>
+
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; }
+}

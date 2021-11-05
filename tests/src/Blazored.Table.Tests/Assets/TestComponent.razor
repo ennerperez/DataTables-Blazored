@@ -1,0 +1,13 @@
+﻿<div class="test-component">
+    <h1>@Title</h1>
+    <button class="test-component__close-button" @onclick="BlazoredTable.CloseAsync">Close</button>
+</div>
+
+@code {
+    [CascadingParameter] BlazoredTableInstance BlazoredTable { get; set; }
+
+    [Parameter] public string Title { get; set; } = DefaultTitle;
+
+    public static string DefaultTitle = "My Test Component";
+
+}

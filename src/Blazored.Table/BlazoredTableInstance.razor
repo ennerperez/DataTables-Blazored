@@ -1,0 +1,12 @@
+﻿<div class="blazored-table-container" @ref="_tableReference">
+
+    <div class="blazored-table-overlay"></div>
+
+    <div id="_@Id.ToString("N")" class="@Class">
+        <div class="blazored-table-content">
+            <CascadingValue Value="this">
+                @Content
+            </CascadingValue>
+        </div>
+    </div>
+</div>
