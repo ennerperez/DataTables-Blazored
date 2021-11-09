@@ -22,7 +22,6 @@ namespace BlazorServer
         {
             services.AddRazorPages();
             services.AddServerSideBlazor(o => o.DetailedErrors = true);
-            services.AddBlazoredTable();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

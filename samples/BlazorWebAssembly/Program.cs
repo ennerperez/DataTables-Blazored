@@ -1,6 +1,8 @@
-﻿using Blazored.Table;
+﻿using System;
+using System.Net.Http;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BlazorWebAssembly
 {
@@ -10,8 +12,10 @@ namespace BlazorWebAssembly
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
-
-            builder.Services.AddBlazoredTable();
+            
+            builder.Services.AddScoped(_ => new HttpClient {
+                BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
+            });
 
             await builder.Build().RunAsync();
         }

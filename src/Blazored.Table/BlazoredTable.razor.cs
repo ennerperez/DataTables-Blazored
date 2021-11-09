@@ -1,103 +1,39 @@
-﻿using Blazored.Table.Services;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.JSInterop;
-using System;
+﻿using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System.Threading.Tasks;
 
 namespace Blazored.Table
 {
     public partial class BlazoredTable
     {
-        [Inject] private NavigationManager NavigationManager { get; set; }
-        [Inject] private IJSRuntime JsRuntime { get; set; }
+        [Inject]
+        private IJSRuntime JsRuntime { get; set; }
 
-        [CascadingParameter] private ITableService CascadedTableService { get; set; }
+        [Parameter]
+        public string Id { get; set; } = string.Empty;
+        
+        [Parameter]
+        public Type Type { get; set; }
+        
+        [Parameter]
+        public ObservableCollection<dynamic> DataSource { get; set; }
 
-        [Parameter] public string Class { get; set; }
+        public string[] Columns => Type.GetProperties().Select(x => x.Name).ToArray();
 
-        private readonly Collection<TableReference> _tables = new Collection<TableReference>();
-        private readonly TableOptions _globalTableOptions = new TableOptions();
+        public object[] Rows => DataSource?.Select(m => m).ToArray() ?? new object[]{};
 
-        protected override void OnInitialized()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (CascadedTableService == null)
+            await base.OnAfterRenderAsync(firstRender);
+            if (firstRender)
             {
-                throw new InvalidOperationException($"{GetType()} requires a cascading parameter of type {nameof(ITableService)}.");
-            }
-
-            NavigationManager.LocationChanged += CancelTables;
-
-            _globalTableOptions.Class = Class;
-
-        }
-
-        internal async void CloseInstance(TableReference table, TableResult result)
-        {
-            if (table.TableInstanceRef != null)
-            {
-                // Gracefully close the table
-                await table.TableInstanceRef.CloseAsync(result);
-            }
-            else
-            {
-                await DismissInstance(table, result);
+                await JsRuntime.InvokeVoidAsync("BlazoredTable.create", Id);
             }
         }
 
-        internal void CloseInstance(Guid id)
-        {
-            var reference = GetTableReference(id);
-            CloseInstance(reference, TableResult.Ok<object>(null));
-        }
-
-        internal void CancelInstance(Guid id)
-        {
-            var reference = GetTableReference(id);
-            CloseInstance(reference, TableResult.Cancel());
-        }
-
-        internal Task DismissInstance(Guid id, TableResult result)
-        {
-            var reference = GetTableReference(id);
-            return DismissInstance(reference, result);
-        }
-
-        internal async Task DismissInstance(TableReference table, TableResult result)
-        {
-            if (table != null)
-            {
-                await JsRuntime.InvokeVoidAsync("BlazoredTable.deactivateFocusTrap", table.Id);
-                table.Dismiss(result);
-                _tables.Remove(table);
-                await InvokeAsync(StateHasChanged);
-            }
-        }
-
-        private async void CancelTables(object sender, LocationChangedEventArgs e)
-        {
-            foreach (var tableReference in _tables.ToList())
-            {
-                await Task.Yield();
-                tableReference.Dismiss(TableResult.Cancel());
-            }
-
-            _tables.Clear();
-            await InvokeAsync(StateHasChanged);
-        }
-
-        private async void Update(TableReference tableReference)
-        {
-            await Task.Yield();
-            _tables.Add(tableReference);
-            await InvokeAsync(StateHasChanged);
-        }
-
-        private TableReference GetTableReference(Guid id)
-        {
-            return _tables.SingleOrDefault(x => x.Id == id);
-        }
     }
 }

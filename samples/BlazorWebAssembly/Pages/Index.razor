@@ -1,4 +1,8 @@
 ﻿@page "/"
+@using System.Collections.ObjectModel
+@using System.IO
+@using BlazorServer.Models
+@inject HttpClient _client
 
 <h1>Blazored Table Sample</h1>
 
@@ -8,19 +12,20 @@
     This is an example of using Blazored Table in its most simplistic form.
 </p>
 
-<div class="card mb-4">
-    <div class="card-body">
-        <p class="card-text">
-            <code>
-                
-            </code>
-        </p>
-    </div>
-</div>
-
+<BlazoredTable Id="Example1" Type="@typeof(Employee)" DataSource="@Employees" />
 
 @code {
 
-    [CascadingParameter] public ITableService Table { get; set; }
+    [Parameter]
+    public ObservableCollection<object> Employees { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var dir = Path.Combine(Directory.GetCurrentDirectory(), "data");
+        var json = await _client.GetStringAsync($"{dir}/employees.json");
+        var data = Newtonsoft.Json.JsonConvert.DeserializeObject<IEnumerable<Employee>>(json);
+        if (data != null) Employees = new ObservableCollection<object>(data);
+        await base.OnInitializedAsync();
+    }
 
 }

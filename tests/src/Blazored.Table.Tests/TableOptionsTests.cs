@@ -10,7 +10,6 @@ namespace Blazored.Table.Tests
         public TableOptionsTests()
         {
             Services.AddScoped<NavigationManager, MockNavigationManager>();
-            Services.AddBlazoredTable();
             JSInterop.Mode = JSRuntimeMode.Loose;
         }
 

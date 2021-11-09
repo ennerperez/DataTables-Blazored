@@ -1,8 +1,23 @@
-﻿<CascadingValue Value="this">
-    <CascadingValue Value="_globalTableOptions">
-        @foreach (var table in _tables)
+﻿<table class="table" id="@Id">
+    <thead>
+    <tr>
+        @foreach (var column in Columns)
         {
-            @table.TableInstance
+            <th>@column</th>
         }
-    </CascadingValue>
-</CascadingValue>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var row in Rows)
+    {
+        <tr>
+            @foreach (var column in Columns)
+            {
+                <td>
+                    @row.GetType().GetProperty(column)?.GetValue(row)
+                </td>
+            }
+        </tr>
+    }
+    </tbody>
+</table>

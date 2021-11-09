@@ -8,4 +8,12 @@
     <ProjectReference Include="..\..\src\Blazored.Table\Blazored.Table.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Data\Employee.json" />
+  </ItemGroup>
+
 </Project>
