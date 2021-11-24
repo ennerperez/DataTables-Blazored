@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BlazorServer.Models
+namespace BlazorServer.Data.Entities
 {
     public class Employee
     {
