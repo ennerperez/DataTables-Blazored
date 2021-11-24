@@ -57,8 +57,13 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.6" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.6" />
     <PackageReference Include="Microsoft.JSInterop.WebAssembly" Version="3.2.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Newtonsoft.Json" />
+    <None Remove="Models\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="icon.png" Pack="true" PackagePath="\" />
     <None Include="package-lock.json" />
@@ -66,4 +71,7 @@
     <None Include="tsconfig.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
 </Project>

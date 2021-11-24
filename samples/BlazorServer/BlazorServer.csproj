@@ -10,10 +10,24 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.12" />
   </ItemGroup>
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Data\Employee.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Controllers\" />
+    <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
+    <None Remove="Interfaces\" />
+    <None Remove="Microsoft.EntityFrameworkCore" />
+    <None Remove="References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="References\" />
+  </ItemGroup>
 </Project>

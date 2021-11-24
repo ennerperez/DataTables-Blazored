@@ -1,6 +1,9 @@
 import $ from 'jquery';
 import DataTables from 'datatables.net';
-import Settings = DataTables.Settings;
+import 'datatables.net-bs4';
+import 'datatables.net-responsive-bs4';
+import 'datatables.net-scroller-bs4';
+import Settings  = DataTables.Settings;
 import Api = DataTables.Api;
 
 interface TableInstance {
@@ -12,23 +15,13 @@ export class BlazoredTable {
 
     private _tables: Array<TableInstance> = [];
     private _instances: Array<Api> = [];
+    private _obj: any = null;
 
-    public create(id:string, options:Settings):void {
-        var fn = $(`#${id}`).dataTable();
-        var table = fn.DataTable(options)
-        // var fn = $.fn.DataTable(options);
-        // var table = fn.table(`#${id}`);
-        // let config: DataTables.Settings ={ 
-        //     ...options,
-        //     ...{
-        //         dom: 'Bfrtip',
-        //         buttons: [
-        //             'copy', 'csv', 'excel', 'pdf', 'print'
-        //         ]
-        //     }
-        // };
-        // @ts-ignore
-        this._instances.push(table);
+    public create(id: string, options: Settings): void {
+        this._obj = $(`#${id}`);
+        this._obj.DataTable(options);
+        
+        this._instances.push(this._obj);
         this._tables.push({id: id, options: options});
     }
 
