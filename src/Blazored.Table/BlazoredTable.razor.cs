@@ -46,7 +46,7 @@ namespace Blazored.Table
                     scroller = false,
                     scrollCollapse = false,
                     serverSide = true,
-                    ajax = new AjaxObj() { url = AjaxUrl }
+                    ajax = new AjaxObj() { url = AjaxUrl, type = "GET", contentType = "application/x-www-form-urlencoded" }
                 };
                 await JsRuntime.InvokeVoidAsync("BlazoredTable.create", Id, s);
             }

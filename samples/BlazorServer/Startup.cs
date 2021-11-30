@@ -1,7 +1,13 @@
 using Blazored.Table;
+using BlazorServer.Controllers;
 using BlazorServer.Data.Contexts;
+using BlazorServer.Data.Entities;
+using BlazorServer.Interfaces;
+using BlazorServer.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,9 +32,12 @@ namespace BlazorServer
             {
                 DefaultContext.UseDbEngine(options, Configuration);
             });
-            
+            services.AddMvc(options => options.EnableEndpointRouting = false).SetCompatibilityVersion(CompatibilityVersion.Latest);
             services.AddRazorPages();
             services.AddServerSideBlazor(o => o.DetailedErrors = true);
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IGenericRepository<Employee>, EmployeeRepository>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,7 +58,7 @@ namespace BlazorServer
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseMvcWithDefaultRoute();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapBlazorHub();

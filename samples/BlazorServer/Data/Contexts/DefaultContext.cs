@@ -54,7 +54,7 @@ namespace BlazorServer.Data.Contexts
         }
 #endif
         
-        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Entities.Employee> Employees { get; set; }
         
         public static void UseDbEngine(DbContextOptionsBuilder optionsBuilder, IConfiguration config)
         {

@@ -83,7 +83,9 @@ namespace Blazored.Table.Models
     public class AjaxObj
     {
         public string url { get; set; }
-    }
+        public string type { get; set; }
+        public string contentType { get; set; }
+     }
 
     public class DataResult : DataResult<object>
     {

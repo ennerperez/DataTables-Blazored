@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Query;
 
 namespace BlazorServer.Interfaces
 {
-    public interface IGenericService<TEntity> : IGenericService<TEntity, int> where TEntity : class, IEntity<int>
+    public interface IGenericRepository<TEntity> : IGenericRepository<TEntity, int> where TEntity : class, IEntity<int>
     {
     }
 
-    public interface IGenericService<TEntity, TKey> where TEntity : class, IEntity<TKey> where TKey : struct, IComparable<TKey>, IEquatable<TKey>
+    public interface IGenericRepository<TEntity, TKey> where TEntity : class, IEntity<TKey> where TKey : struct, IComparable<TKey>, IEquatable<TKey>
     {
 
         Task<IQueryable<TResult>> ReadAsync<TResult>(

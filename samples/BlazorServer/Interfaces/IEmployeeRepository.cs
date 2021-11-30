@@ -1,7 +1,11 @@
 using System;
+using System.Threading.Tasks;
+using BlazorServer.Data.Entities;
+
 namespace BlazorServer.Interfaces
 {
-    public interface IEmployeeService
+    public interface IEmployeeRepository : IGenericRepository<Employee>
     {
+
     }
 }

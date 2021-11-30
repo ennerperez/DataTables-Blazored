@@ -14,18 +14,18 @@ namespace BlazorServer.Controllers
 {
     public abstract class DataController<TEntity> : DataController<TEntity, int> where TEntity : class, IEntity<int>
     {
-        public DataController(IGenericService<TEntity, int> service) : base(service)
+        public DataController(IGenericRepository<TEntity, int> service) : base(service)
         {
         }
     }
 
     [Route("api/[controller]")]
     [ApiController]
-    public abstract class ApiControllerBaseWithDbContext<TContext> : ControllerBase where TContext : DbContext
+    public abstract class DataControllerWithDbContext<TContext> : ControllerBase where TContext : DbContext
     {
         protected readonly TContext DbContext;
 
-        public ApiControllerBaseWithDbContext(TContext dbContext)
+        public DataControllerWithDbContext(TContext dbContext)
         {
             DbContext = dbContext;
         }
@@ -35,14 +35,14 @@ namespace BlazorServer.Controllers
     [ApiController]
     public abstract class DataController<TEntity, TKey> : ControllerBase where TEntity : class, IEntity<TKey> where TKey : struct, IComparable<TKey>, IEquatable<TKey>
     {
-        protected readonly IGenericService<TEntity, TKey> Service;
+        protected readonly IGenericRepository<TEntity, TKey> Service;
 
-        public DataController(IGenericService<TEntity, TKey> service)
+        public DataController(IGenericRepository<TEntity, TKey> service)
         {
             Service = service;
         }
 
-        public async Task<JsonResult> Data<TResult>(AjaxViewModel model, Expression<Func<TEntity, TResult>> selector)
+        public async Task<JsonResult> Data<TResult>([FromBody]AjaxViewModel model, Expression<Func<TEntity, TResult>> selector)
         {
             object rows;
 

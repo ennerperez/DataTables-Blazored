@@ -1,8 +1,9 @@
 ﻿using System;
+using BlazorServer.Interfaces;
 
 namespace BlazorServer.Data.Entities
 {
-    public class Employee
+    public class Employee : IEntity<int>
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
