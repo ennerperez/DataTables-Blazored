@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+// ReSharper disable InconsistentNaming
 
 namespace BlazorServer.Models
 {
@@ -60,5 +61,17 @@ namespace BlazorServer.Models
         public string Column { get; set; }
 
         public string Value { get; set; }
+    }
+    
+    public class AjaxResult<TResult>
+    {
+        public int iTotalRecords { get; set; }
+        public int iTotalDisplayRecords { get; set; }
+        public List<TResult> aaData { get; set; }
+    }
+
+    public class AjaxResult : AjaxResult<object>
+    {
+        
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BlazorServer.Data.Entities;
@@ -9,6 +10,6 @@ namespace BlazorServer.Interfaces
 {
     public interface IEmployeeRepository : IGenericRepository<Employee>
     {
-        Task<JsonResult> GetDataAsync<TResult>([FromBody] AjaxViewModel model, Expression<Func<Employee, TResult>> selector);
+        Task<AjaxResult> GetDataAsync<TResult>([FromBody] AjaxViewModel model, Expression<Func<Employee, TResult>> selector);
     }
 }

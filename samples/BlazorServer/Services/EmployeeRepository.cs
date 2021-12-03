@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -21,7 +22,7 @@ namespace BlazorServer.Services
         {
         }
         
-        public async Task<JsonResult> GetDataAsync<TResult>([FromBody]AjaxViewModel model, Expression<Func<Employee, TResult>> selector)
+        public async Task<AjaxResult> GetDataAsync<TResult>([FromBody]AjaxViewModel model, Expression<Func<Employee, TResult>> selector)
         {
             object rows;
 
@@ -119,7 +120,7 @@ namespace BlazorServer.Services
             var isFiltered = (model.Search != null && !string.IsNullOrWhiteSpace(model.Search.Value));
             var stotal = isFiltered ? data.Count : total;
 
-            return new JsonResult(new { iTotalRecords = total, iTotalDisplayRecords = stotal, aaData = data });
+            return new AjaxResult { iTotalRecords = total, iTotalDisplayRecords = stotal, aaData = data };
         }
     }
 }

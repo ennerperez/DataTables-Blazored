@@ -40,4 +40,14 @@
     <Folder Include="References\" />
     <Folder Include="Services\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Pages\Index.css" />
+    <None Include="Pages\Index.razor.razor.css">
+      <DependentUpon>Index.razor.razor</DependentUpon>
+    </None>
+    <None Remove="Pages\Index.js" />
+    <None Include="Pages\Index.razor.js">
+      <DependentUpon>Index.razor.razor</DependentUpon>
+    </None>
+  </ItemGroup>
 </Project>
