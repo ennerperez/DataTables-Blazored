@@ -1,8 +1,18 @@
 using System;
+using System.Collections.Generic;
+
 namespace BlazorServer.Models
 {
     public class AjaxViewModel
     {
+
+        public AjaxViewModel()
+        {
+            Columns = new ColumnViewModel[0];
+            Order = new ColumnOrderViewModel[0];
+            Filters = new ColumnFilterViewModel[0];
+        }
+        
         public int Draw { get; set; }
 
         public ColumnViewModel[] Columns { get; set; }

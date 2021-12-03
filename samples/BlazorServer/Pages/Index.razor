@@ -2,6 +2,7 @@
 @using System.Collections.ObjectModel
 @using System.IO
 @using BlazorServer.Models
+@inject Interfaces.IEmployeeRepository _employeeService
 
 <h1>Blazored Table Sample</h1>
 
@@ -24,6 +25,12 @@
         var json = await File.ReadAllTextAsync($"{dir}/employees.json");
         var data = Newtonsoft.Json.JsonConvert.DeserializeObject<IEnumerable<Employee>>(json);
         if (data != null) Employees = new ObservableCollection<object>(data);*/
+        var model = new AjaxViewModel()
+        {
+            Start = 10, 
+            Length = 100
+        };
+        var data = await _employeeService.GetDataAsync(model, e => new {e.Id, e.Office, e.Position, e.Salary, e.FirstName, e.LastName});
         await base.OnInitializedAsync();
     }
 

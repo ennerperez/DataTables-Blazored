@@ -26,8 +26,8 @@ namespace BlazorServer.Services
 
     public abstract class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey> where TEntity : class, IEntity<TKey> where TKey : struct, IComparable<TKey>, IEquatable<TKey>
     {
-        protected DbContext _dbContext;
-        protected DbSet<TEntity> _dbSet;
+        protected DbContext DbContext;
+        protected DbSet<TEntity> DbSet;
         protected readonly ILogger Logger;
         protected readonly IConfiguration Configuration;
 
@@ -65,8 +65,8 @@ namespace BlazorServer.Services
 
         protected GenericRepository(DbContext context, ILoggerFactory logger, IConfiguration configuration)
         {
-            _dbContext = context;
-            _dbSet = _dbContext.Set<TEntity>();
+            DbContext = context;
+            DbSet = DbContext.Set<TEntity>();
             Logger = logger.CreateLogger(GetType());
 #if ENABLE_BULK
             MinRowsToBulk = ushort.Parse(configuration["RepositorySettings:MinRowsToBulk"] ?? "1000");
@@ -87,7 +87,7 @@ namespace BlazorServer.Services
             bool ignoreQueryFilters = false,
             bool includeDeleted = false)
         {
-            IQueryable<TEntity> query = _dbSet;
+            IQueryable<TEntity> query = DbSet;
             if (disableTracking) query = query.AsNoTracking();
             if (include != null) query = include(query);
             if (ignoreQueryFilters) query = query.IgnoreQueryFilters();
@@ -180,7 +180,7 @@ namespace BlazorServer.Services
             if (searchPredicate != null)
                 expression = Expression.Lambda<Func<TEntity, bool>>(searchPredicate, parameter);
 
-            IQueryable<TEntity> query = _dbSet;
+            IQueryable<TEntity> query = DbSet;
             if (disableTracking) query = query.AsNoTracking();
             if (include != null) query = include(query);
             if (ignoreQueryFilters) query = query.IgnoreQueryFilters();
@@ -206,22 +206,22 @@ namespace BlazorServer.Services
         public virtual async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate = null)
         {
             predicate = PreparePredicate(predicate);
-            if (predicate != null) return await _dbSet.CountAsync(predicate);
-            return await _dbSet.CountAsync();
+            if (predicate != null) return await DbSet.CountAsync(predicate);
+            return await DbSet.CountAsync();
         }
 
         public virtual async Task<long> LongCountAsync(Expression<Func<TEntity, bool>> predicate = null)
         {
             predicate = PreparePredicate(predicate);
-            if (predicate != null) return await _dbSet.LongCountAsync(predicate);
-            return await _dbSet.LongCountAsync();
+            if (predicate != null) return await DbSet.LongCountAsync(predicate);
+            return await DbSet.LongCountAsync();
         }
 
         public virtual async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate = null)
         {
             predicate = PreparePredicate(predicate);
-            if (predicate != null) return await _dbSet.AnyAsync(predicate);
-            return await _dbSet.AnyAsync();
+            if (predicate != null) return await DbSet.AnyAsync(predicate);
+            return await DbSet.AnyAsync();
         }
 
         public virtual async Task CreateAsync(params TEntity[] entities)
@@ -248,14 +248,14 @@ namespace BlazorServer.Services
                     return;
                 }
 #else
-                await _dbSet.AddRangeAsync(entities);
+                await DbSet.AddRangeAsync(entities);
 #endif
             }
 #if ENABLE_BULK
             else
                 await _dbContext.BulkInsertAsync(entities);
 #endif
-            await _dbContext.SaveChangesAsync();
+            await DbContext.SaveChangesAsync();
         }
 
         public virtual async Task UpdateAsync(params TEntity[] entities)
@@ -282,14 +282,14 @@ namespace BlazorServer.Services
                     return;
                 }
 #else
-                _dbSet.UpdateRange(entities);
+                DbSet.UpdateRange(entities);
 #endif
             }
 #if ENABLE_BULK
             else
                 await _dbContext.BulkUpdateAsync(entities);
 #endif
-            await _dbContext.SaveChangesAsync();
+            await DbContext.SaveChangesAsync();
         }
 
         public virtual async Task DeleteAsync(params object[] keys)
@@ -297,7 +297,7 @@ namespace BlazorServer.Services
             var list = new List<TEntity>();
             foreach (var item in keys)
             {
-                var entity = await _dbSet.FindAsync(item);
+                var entity = await DbSet.FindAsync(item);
                 if (entity != null)
                     list.Add(entity);
             }
@@ -323,13 +323,13 @@ namespace BlazorServer.Services
 #if ENABLE_BULK
             if (keys.Length < MinRowsToBulk || MinRowsToBulk == 0)
 #endif
-            _dbSet.RemoveRange(list);
+            DbSet.RemoveRange(list);
 #if ENABLE_BULK
             else
                 await _dbContext.BulkDeleteAsync(list);
 #endif
 
-            await _dbContext.SaveChangesAsync();
+            await DbContext.SaveChangesAsync();
         }
 
         public virtual async Task CreateOrUpdateAsync(params TEntity[] entities)
@@ -365,7 +365,7 @@ namespace BlazorServer.Services
             bool ignoreQueryFilters = false,
             bool includeDeleted = false)
         {
-            IQueryable<TEntity> query = _dbSet;
+            IQueryable<TEntity> query = DbSet;
             if (disableTracking)
                 query = query.AsNoTracking();
             if (include != null)
@@ -391,7 +391,7 @@ namespace BlazorServer.Services
             bool ignoreQueryFilters = false,
             bool includeDeleted = false)
         {
-            IQueryable<TEntity> query = _dbSet;
+            IQueryable<TEntity> query = DbSet;
             if (disableTracking)
                 query = query.AsNoTracking();
             if (include != null)
