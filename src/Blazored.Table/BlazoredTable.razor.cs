@@ -22,12 +22,12 @@ namespace Blazored.Table
         [Parameter]
         public Type? Type { get; set; }
 
-        /*[Parameter]
-        public ObservableCollection<dynamic> DataSource { get; set; }
+        [Parameter]
+        public ObservableCollection<object> DataSource { get; set; }
 
         public string[] Columns => Type.GetProperties().Select(x => x.Name).ToArray();
 
-        public string DatatableColumns => JsonConvert.SerializeObject(Type.GetProperties().Select(x => new TableColumn() { title = x.Name, data = x.Name }));
+        /*public string DatatableColumns => JsonConvert.SerializeObject(Type.GetProperties().Select(x => new TableColumn() { title = x.Name, data = x.Name }));
 
         public object[] Rows => DataSource?.Select(m => m).ToArray() ?? new object[] { };*/
 
@@ -40,13 +40,14 @@ namespace Blazored.Table
             if (firstRender)
             {
                 var s = new Settings() {
-                    columns = new[] { new TableColumn() { data = "first_name" }, new TableColumn() { data = "last_name" } },
+                    columns = new[] { new TableColumn() { title = "", data = "id" }, new TableColumn() { title = "First Name", data = "firstName" }, new TableColumn() { title = "Last Name", data = "lastName" } },
                     ordering = true,
-                    deferRender = false,
-                    scroller = false,
-                    scrollCollapse = false,
-                    serverSide = true,
-                    ajax = new AjaxObj() { url = AjaxUrl, type = "GET", contentType = "application/x-www-form-urlencoded" }
+                    //data = DataSource,//sonConvert.SerializeObject(DataSource),
+                    deferRender = true,
+                    scroller = true,
+                    scrollY = "350px",
+                    serverSide = true//,
+                    //ajax = new AjaxObj() { url = AjaxUrl, type = "GET", contentType = "application/x-www-form-urlencoded" }
                 };
                 await JsRuntime.InvokeVoidAsync("BlazoredTable.create", Id, s);
             }

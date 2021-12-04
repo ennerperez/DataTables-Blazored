@@ -63,6 +63,7 @@
   <ItemGroup>
     <None Remove="Newtonsoft.Json" />
     <None Remove="Models\" />
+    <None Remove="Microsoft.TypeScript.MSBuild" />
   </ItemGroup>
   <ItemGroup>
     <None Include="icon.png" Pack="true" PackagePath="\" />

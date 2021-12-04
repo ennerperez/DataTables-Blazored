@@ -3,7 +3,6 @@ using BlazorServer.Controllers;
 using BlazorServer.Data.Contexts;
 using BlazorServer.Data.Entities;
 using BlazorServer.Interfaces;
-using BlazorServer.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -35,8 +34,6 @@ namespace BlazorServer
             services.AddMvc(options => options.EnableEndpointRouting = false).SetCompatibilityVersion(CompatibilityVersion.Latest);
             services.AddRazorPages();
             services.AddServerSideBlazor(o => o.DetailedErrors = true);
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-            services.AddScoped<IGenericRepository<Employee>, EmployeeRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 

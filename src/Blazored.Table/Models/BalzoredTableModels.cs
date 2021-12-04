@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Blazored.Table.Models
 {
@@ -71,12 +72,13 @@ namespace Blazored.Table.Models
     public class Settings
     {
         public bool? ordering { get; set; }
-        //public string columns { get; set; }
+        public string scrollY { get; set; }
         public bool? scrollCollapse { get; set; }
         public bool? deferRender { get; set; }
         public bool? scroller { get; set; }
         public bool? serverSide { get; set; }
-        public AjaxObj ajax { get; set; }
+        //public AjaxObj ajax { get; set; }
+        //public ObservableCollection<object> data { get; set; }
         public IEnumerable<TableColumn> columns { get; set; }
     }
 
