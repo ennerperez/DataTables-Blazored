@@ -13,6 +13,8 @@ namespace Blazored.Table
 {
     public partial class BlazoredTable
     {
+        private Type _type;
+
         [Inject]
         private IJSRuntime JsRuntime { get; set; }
 
@@ -20,7 +22,7 @@ namespace Blazored.Table
         public string Id { get; set; } = string.Empty;
 
         [Parameter]
-        public Type? Type { get; set; }
+        public Type Type { get => _type; set => _type = value; }
 
         [Parameter]
         public ObservableCollection<object> DataSource { get; set; }
@@ -39,20 +41,28 @@ namespace Blazored.Table
             await base.OnAfterRenderAsync(firstRender);
             if (firstRender)
             {
-                var s = new Settings() {
+                var s = new Settings()
+                {
                     columns = new[] { new TableColumn() { title = "", data = "id" }, new TableColumn() { title = "First Name", data = "firstName" }, new TableColumn() { title = "Last Name", data = "lastName" } },
                     ordering = true,
-                    //data = DataSource,//sonConvert.SerializeObject(DataSource),
                     deferRender = true,
                     scroller = true,
                     scrollY = "350px",
-                    serverSide = true//,
-                    //ajax = new AjaxObj() { url = AjaxUrl, type = "GET", contentType = "application/x-www-form-urlencoded" }
+                    serverSide = true
                 };
                 await JsRuntime.InvokeVoidAsync("BlazoredTable.create", Id, s);
             }
         }
 
+        /*
+         * SE SUPONE QUE AQUI SE LEE LA LISTA QUE VIENE DE GANSOFT
+         * 
+         */
+        [JSInvokable]
+        public static async Task<int[]> ReturnArrayAsync(AjaxViewModel data = null)
+        {
+            return await Task.FromResult(new int[] { 1, 2, 3 });
+        }
 
 
     }
