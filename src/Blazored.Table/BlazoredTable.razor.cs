@@ -22,10 +22,22 @@ namespace Blazored.Table
         public string Id { get; set; } = string.Empty;
 
         [Parameter]
+        public string Assembly { get; set; } = string.Empty;
+
+        [Parameter]
+        public string Method { get; set; } = string.Empty;
+
+        [Parameter]
         public Type Type { get => _type; set => _type = value; }
 
         [Parameter]
         public ObservableCollection<object> DataSource { get; set; }
+
+        [Parameter]
+        public ObservableCollection<TableColumn> TableColumns { get; set; } // = new ObservableCollection<TableColumn> { new TableColumn() { title = "", data = "id" }, new TableColumn() { title = "First Name", data = "firstName" }, new TableColumn() { title = "Last Name", data = "lastName" } };
+
+        [Parameter]
+        public Settings Settings { get; set; }
 
         public string[] Columns => Type.GetProperties().Select(x => x.Name).ToArray();
 
@@ -36,21 +48,30 @@ namespace Blazored.Table
         [Parameter]
         public string AjaxUrl { get; set; } = string.Empty;
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override async Task OnInitializedAsync()
         {
-            await base.OnAfterRenderAsync(firstRender);
-            if (firstRender)
+            if (Settings == null)
             {
-                var s = new Settings()
+                Settings = new Settings()
                 {
-                    columns = new[] { new TableColumn() { title = "", data = "id" }, new TableColumn() { title = "First Name", data = "firstName" }, new TableColumn() { title = "Last Name", data = "lastName" } },
+                    columns = TableColumns,
                     ordering = true,
                     deferRender = true,
                     scroller = true,
                     scrollY = "350px",
                     serverSide = true
                 };
-                await JsRuntime.InvokeVoidAsync("BlazoredTable.create", Id, s);
+            }
+            await base.OnInitializedAsync();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+            if (firstRender)
+            {
+                var s = Settings;
+                await JsRuntime.InvokeVoidAsync("BlazoredTable.create", Id, s, Assembly, Method);
             }
         }
 
@@ -61,6 +82,7 @@ namespace Blazored.Table
         [JSInvokable]
         public static async Task<int[]> ReturnArrayAsync(AjaxViewModel data = null)
         {
+
             return await Task.FromResult(new int[] { 1, 2, 3 });
         }
 

@@ -79,7 +79,7 @@ namespace Blazored.Table.Models
         public bool? serverSide { get; set; }
         //public AjaxObj ajax { get; set; }
         //public ObservableCollection<object> data { get; set; }
-        public IEnumerable<TableColumn> columns { get; set; }
+        public ObservableCollection<TableColumn> columns { get; set; }
     }
 
     public class AjaxObj

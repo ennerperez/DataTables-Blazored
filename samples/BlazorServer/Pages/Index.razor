@@ -2,6 +2,7 @@
 @using System.Collections.ObjectModel
 @using System.IO
 @using BlazorServer.Models
+@using Blazored.Table.Models
 
 <h1>Blazored Table Sample</h1>
 
@@ -10,7 +11,131 @@
 <p>
     This is an example of using Blazored Table in its most simplistic form.
 </p>
-@if (Employees != null)
-{
-    <BlazoredTable Id="Example1" DataSource="Employees" />
-}
+
+<BlazoredTable Id="Example1" Assembly="BlazorServer" Method="ObtenerData" TableColumns="Columns" />
+
+@code {
+        public ObservableCollection<TableColumn> Columns { get; set; }
+
+        protected override async Task OnInitializedAsync()
+        {
+            Columns = new ObservableCollection<TableColumn> { new TableColumn() { title = "", data = "id" }, new TableColumn() { title = "First Name", data = "firstName" }, new TableColumn() { title = "Last Name", data = "lastName" } };
+            await base.OnInitializedAsync();
+
+        }
+
+        [JSInvokable]
+        public static async Task<DataResult> ObtenerData(Blazored.Table.Models.AjaxViewModel data = null)
+        {
+            DataResult newData = new DataResult();
+
+            newData.iTotalDisplayRecords = 20;
+            newData.iTotalRecords = 20;
+            newData.aaData = new[]
+            {
+                new {
+                    id = 1,
+                    firstName = "Mario",
+                    lastName = "Muñoz"
+                    },
+                new {
+                    id = 2,
+                    firstName = "Jesus",
+                    lastName = "Becerra"
+                    },
+                new {
+                    id = 1,
+                    firstName = "Mario",
+                    lastName = "Muñoz"
+                    },
+                new {
+                    id = 2,
+                    firstName = "Jesus",
+                    lastName = "Becerra"
+                    },
+                new {
+                    id = 1,
+                    firstName = "Mario",
+                    lastName = "Muñoz"
+                    },
+                new {
+                    id = 2,
+                    firstName = "Jesus",
+                    lastName = "Becerra"
+                    },
+                new {
+                    id = 1,
+                    firstName = "Mario",
+                    lastName = "Muñoz"
+                    },
+                new {
+                    id = 2,
+                    firstName = "Jesus",
+                    lastName = "Becerra"
+                    },
+                new {
+                    id = 1,
+                    firstName = "Mario",
+                    lastName = "Muñoz"
+                    },
+                new {
+                    id = 2,
+                    firstName = "Jesus",
+                    lastName = "Becerra"
+                    },
+                new {
+                    id = 1,
+                    firstName = "Mario",
+                    lastName = "Muñoz"
+                    },
+                new {
+                    id = 2,
+                    firstName = "Jesus",
+                    lastName = "Becerra"
+                    },
+                new {
+                    id = 1,
+                    firstName = "Mario",
+                    lastName = "Muñoz"
+                    },
+                new {
+                    id = 2,
+                    firstName = "Jesus",
+                    lastName = "Becerra"
+                    },
+                new {
+                    id = 1,
+                    firstName = "Mario",
+                    lastName = "Muñoz"
+                    },
+                new {
+                    id = 2,
+                    firstName = "Jesus",
+                    lastName = "Becerra"
+                    },
+                new {
+                    id = 1,
+                    firstName = "Mario",
+                    lastName = "Muñoz"
+                    },
+                new {
+                    id = 2,
+                    firstName = "Jesus",
+                    lastName = "Becerra"
+                    },
+                new {
+                    id = 1,
+                    firstName = "Mario",
+                    lastName = "Muñoz"
+                    },
+                new {
+                    id = 2,
+                    firstName = "Jesus",
+                    lastName = "Becerra"
+                    },
+
+            };
+            
+            return newData;
+        }
+    }

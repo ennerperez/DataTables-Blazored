@@ -13,7 +13,7 @@ namespace BlazorServer.Pages
         {
 
         }
-        public ObservableCollection<object> Employees { get; set; }
+        /*public ObservableCollection<object> Employees { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -24,6 +24,6 @@ namespace BlazorServer.Pages
             await base.OnInitializedAsync();
 
 
-        }
+        } */
     }
 }

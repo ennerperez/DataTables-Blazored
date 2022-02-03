@@ -148,118 +148,14 @@ var BlazoredTable = /** @class */ (function () {
         this._obj = null;
     }
     //private dotNetHelper = window.DotNet;
-    BlazoredTable.prototype.create = function (id, options) {
+    BlazoredTable.prototype.create = function (id, options, assembly, method) {
         var _this = this;
         this._obj = jquery_1.default("#" + id);
         options.ajax = function (data, callback, settings) {
-            var result = _this.loadInfoFromServer(data);
+            var result = _this.loadInfoFromServer(assembly, method, data);
             result.then(function (f) {
-                console.log("f: ", f);
-                console.log("data:", data);
-                console.log("settings:", settings);
-                callback({
-                    draw: 1,
-                    recordsTotal: 160,
-                    recordsFiltered: 160,
-                    data: [
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                        { id: "1", firstName: "Alex", lastName: "Acosta" },
-                        { id: "2", firstName: "Mario", lastName: "Munoz" },
-                    ]
-                });
+                //console.log("f: ", f); /* RESULTADO DEL SERVIDOR */
+                callback(f);
             });
         };
         console.log("options", options);
@@ -267,12 +163,12 @@ var BlazoredTable = /** @class */ (function () {
         this._instances.push(this._obj);
         this._tables.push({ id: id, options: options });
     };
-    BlazoredTable.prototype.loadInfoFromServer = function (data) {
+    BlazoredTable.prototype.loadInfoFromServer = function (assembly, method, data) {
         return __awaiter(this, void 0, void 0, function () {
             var result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, window.DotNet.invokeMethodAsync('Blazored.Table', 'ReturnArrayAsync', data)];
+                    case 0: return [4 /*yield*/, window.DotNet.invokeMethodAsync(assembly, method, data)];
                     case 1:
                         result = _a.sent();
                         return [2 /*return*/, result];
