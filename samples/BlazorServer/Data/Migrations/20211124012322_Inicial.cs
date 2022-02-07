@@ -17,8 +17,8 @@ namespace BlazorServer.Data.Migrations
                     LastName = table.Column<string>(type: "TEXT", nullable: true),
                     Position = table.Column<string>(type: "TEXT", nullable: true),
                     Office = table.Column<string>(type: "TEXT", nullable: true),
-                    StartDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Salary = table.Column<decimal>(type: "TEXT", nullable: false)
+                    StartDate = table.Column<DateTime>(type: "DATETIME", nullable: false),
+                    Salary = table.Column<decimal>(type: "NUMERIC", nullable: false)
                 },
                 constraints: table =>
                 {

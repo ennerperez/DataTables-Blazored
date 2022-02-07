@@ -35,10 +35,10 @@ namespace BlazorServer.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("Salary")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("NUMERIC");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("DATETIME");
 
                     b.HasKey("Id");
 
