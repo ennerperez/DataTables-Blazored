@@ -39,7 +39,7 @@
   </Target>
 
   <Target Name="DebugRunWebPack" BeforeTargets="Build" Condition="$(Configuration) == 'Debug'">
-    <Exec Command="npm run-script build:debug" ContinueOnError="false" />
+    <Exec Command="npm run-script build:debug" ContinueOnError="true" />
   </Target>
 
   <Target Name="ReleaseRunWebPack" BeforeTargets="Build" Condition="$(Configuration) == 'Release'">
