@@ -3,6 +3,7 @@ using BlazorServer.Controllers;
 using BlazorServer.Data.Contexts;
 using BlazorServer.Data.Entities;
 using BlazorServer.Interfaces;
+using BlazorServer.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -35,6 +36,9 @@ namespace BlazorServer
             services.AddRazorPages();
             services.AddServerSideBlazor(o => o.DetailedErrors = true);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
