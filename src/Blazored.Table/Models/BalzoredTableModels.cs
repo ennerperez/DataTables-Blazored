@@ -4,13 +4,6 @@ using System.Collections.ObjectModel;
 
 namespace Blazored.Table.Models
 {
-    public class BalzoredTableModels
-    {
-        public BalzoredTableModels()
-        {
-        }
-    }
-
     public class AjaxViewModel
     {
         public int Draw { get; set; }
@@ -67,6 +60,8 @@ namespace Blazored.Table.Models
         public string title { get; set; }
         public string data { get; set; }
         public string name { get; set; }
+        
+        public string format { get; set; }
     }
 
     public class Settings
