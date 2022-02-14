@@ -1,60 +1,7 @@
 ﻿@page "/"
-@using System.Collections.ObjectModel
-@using System.ComponentModel
-@using System.ComponentModel.DataAnnotations
-@using System.Linq.Expressions
-@using System.Reflection
-@using Blazored.Table.Models
-@using BlazorServer.Data.Entities
-@using BlazorServer.Interfaces
 @using Microsoft.AspNetCore.Http
-@using Microsoft.Extensions.DependencyInjection
 @inject IHttpContextAccessor _httpContextAccessor
 
-<h1>Blazored Table Sample</h1>
+<h1>Blazored Samples</h1>
 
 <hr class="mb-5"/>
-
-<p>
-    This is an example of using Blazored Table in its most simplistic form.
-</p>
-
-<BlazoredTable Id="Example1" Method="GetDataAsync" Columns="Columns"/>
-
-@code {
-
-    public static ObservableCollection<TableColumn> Columns { get; set; }
-    public static Expression<Func<Employee, object>> Selector { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        Selector = s => new {s.Id, s.FirstName, s.LastName, s.Office, s.Position, s.StartDate, s.Salary};
-
-        var columns = typeof(Employee).GetProperties().Select(m => new
-        {
-            m.Name,
-            Data = char.ToLower(m.Name[0]) + m.Name.Substring(1),
-            Display = m.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? m.Name,
-            Format = m.GetCustomAttribute<DisplayFormatAttribute>()?.DataFormatString ?? "{0:0.00}",
-        });
-        Columns = new ObservableCollection<TableColumn>(columns.Select(m => new TableColumn() {Title = m.Display, Data = m.Data, Name = m.Name, Format = m.Format}));
-
-        await base.OnInitializedAsync();
-    }
-
-    protected override void OnInitialized()
-    {
-        Repository = _httpContextAccessor.HttpContext.RequestServices.GetService<IEmployeeRepository>();
-        base.OnInitialized();
-    }
-
-    public static IEmployeeRepository Repository;
-
-    [JSInvokable]
-    public static async Task<TableResult> GetDataAsync(TableRequestViewModel data = null)
-    {
-        var newData = await Repository.GetDataAsync(data, Selector);
-        return newData;
-    }
-
-}

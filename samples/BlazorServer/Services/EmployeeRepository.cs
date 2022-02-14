@@ -10,28 +10,21 @@ using Blazored.Table.Models;
 using BlazorServer.Data.Contexts;
 using BlazorServer.Data.Entities;
 using BlazorServer.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace BlazorServer.Services
 {
     public class EmployeeRepository : IEmployeeRepository
     {
         private readonly DefaultContext _context;
-        private readonly ILogger _logger;
-        private readonly IConfiguration _configuration;
 
-        public EmployeeRepository(DefaultContext context, ILoggerFactory logger, IConfiguration configuration)
+        public EmployeeRepository(DefaultContext context)
         {
             _context = context;
-            _logger = logger.CreateLogger<EmployeeRepository>();
-            _configuration = configuration;
         }
 
-        public async Task<TableResult> GetDataAsync<TResult>([FromBody] TableRequestViewModel model, Expression<Func<Employee, TResult>> selector)
+        public async Task<TableResult> GetDataAsync<TResult>(TableRequestViewModel model, Expression<Func<Employee, TResult>> selector = null)
         {
             var dbSet = _context.Set<Employee>();
             object rows;

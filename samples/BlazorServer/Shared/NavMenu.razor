@@ -8,7 +8,18 @@
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
         <li class="nav-item px-3">
-            
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+            <NavLink class="nav-link" href="/blazor" Match="NavLinkMatch.All">
+                <span class="oi oi-eye" aria-hidden="true"></span> Blazor
+            </NavLink>
+            <NavLink class="nav-link" href="/file" Match="NavLinkMatch.All">
+                <span class="oi oi-eye" aria-hidden="true"></span> File
+            </NavLink>
+            <NavLink class="nav-link" href="/url" Match="NavLinkMatch.All">
+                <span class="oi oi-eye" aria-hidden="true"></span> Url
+            </NavLink>
         </li>
     </ul>
 </div>
@@ -22,4 +33,5 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
+
 }
