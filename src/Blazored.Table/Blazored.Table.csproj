@@ -34,7 +34,7 @@
   </PropertyGroup>
 
   <Target Name="NpmInstall" BeforeTargets="BeforeBuild" Inputs="package.json" Outputs="$(NpmInstallStampFile)">
-    <Exec Command="npm install" />
+    <Exec Command="npm install" ContinueOnError="true" />
     <Touch Files="$(NpmInstallStampFile)" AlwaysCreate="true" />
   </Target>
 
