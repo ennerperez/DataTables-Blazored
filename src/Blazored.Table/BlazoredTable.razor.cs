@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Reflection;
 using Newtonsoft.Json;
 using Blazored.Table.Models;
 
@@ -13,7 +14,6 @@ namespace Blazored.Table
 {
     public partial class BlazoredTable
     {
-        private Type _type;
 
         [Inject]
         private IJSRuntime JsRuntime { get; set; }
@@ -22,46 +22,49 @@ namespace Blazored.Table
         public string Id { get; set; } = string.Empty;
 
         [Parameter]
-        public string Assembly { get; set; } = string.Empty;
-
-        [Parameter]
         public string Method { get; set; } = string.Empty;
-
-        [Parameter]
-        public Type Type { get => _type; set => _type = value; }
 
         [Parameter]
         public ObservableCollection<object> DataSource { get; set; }
 
         [Parameter]
-        public ObservableCollection<TableColumn> TableColumns { get; set; } // = new ObservableCollection<TableColumn> { new TableColumn() { title = "", data = "id" }, new TableColumn() { title = "First Name", data = "firstName" }, new TableColumn() { title = "Last Name", data = "lastName" } };
+        public ObservableCollection<TableColumn> Columns { get; set; }
 
         [Parameter]
-        public Settings Settings { get; set; }
-
-        public string[] Columns => Type.GetProperties().Select(x => x.Name).ToArray();
-
-        /*public string DatatableColumns => JsonConvert.SerializeObject(Type.GetProperties().Select(x => new TableColumn() { title = x.Name, data = x.Name }));
-
-        public object[] Rows => DataSource?.Select(m => m).ToArray() ?? new object[] { };*/
+        public TableSettings Settings { get; set; }
 
         [Parameter]
-        public string AjaxUrl { get; set; } = string.Empty;
+        public string Url { get; set; } = string.Empty;
+
+        private string _entryAssembly;
+        private string _executingAssembly;
+
+        public BlazoredTable()
+        {
+            _executingAssembly = Assembly.GetExecutingAssembly()?.GetName().Name;
+            _entryAssembly = Assembly.GetEntryAssembly()?.GetName().Name;
+        }
 
         protected override async Task OnInitializedAsync()
         {
+            
+            if (string.IsNullOrWhiteSpace(Id))
+                Id = Guid.NewGuid().ToString();
+            
             if (Settings == null)
-            {
-                Settings = new Settings()
+                Settings = new TableSettings()
                 {
-                    columns = TableColumns,
-                    ordering = true,
-                    deferRender = true,
-                    scroller = true,
-                    scrollY = "350px",
-                    serverSide = true
+                    Columns = Columns,
+                    Ordering = true,
+                    DeferRender = true,
+                    Scroller = true,
+                    ScrollY = "350px",
+                    ServerSide = true
                 };
-            }
+            
+            if (string.IsNullOrWhiteSpace(Method))
+                Method = "GetDataAsync";
+
             await base.OnInitializedAsync();
         }
 
@@ -70,22 +73,8 @@ namespace Blazored.Table
             await base.OnAfterRenderAsync(firstRender);
             if (firstRender)
             {
-                var s = Settings;
-                await JsRuntime.InvokeVoidAsync("BlazoredTable.create", Id, s, Assembly, Method);
+                await JsRuntime.InvokeVoidAsync($"{_executingAssembly}.create", Id, Settings, _entryAssembly, Method);
             }
         }
-
-        /*
-         * SE SUPONE QUE AQUI SE LEE LA LISTA QUE VIENE DE GANSOFT
-         * 
-         */
-        [JSInvokable]
-        public static async Task<int[]> ReturnArrayAsync(AjaxViewModel data = null)
-        {
-
-            return await Task.FromResult(new int[] { 1, 2, 3 });
-        }
-
-
     }
 }

@@ -75,4 +75,10 @@
   <ItemGroup>
     <Folder Include="Models\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="BlazoredTable.razor.cs">
+      <DependentUpon>BlazoredTable.razor</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>
