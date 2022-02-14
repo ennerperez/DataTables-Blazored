@@ -2,6 +2,14 @@
 {
     public class TableRequestViewModel
     {
+        public TableRequestViewModel()
+        {
+            Columns = new ColumnViewModel[0];
+            Order = new ColumnOrderViewModel[0];
+            Filters = new ColumnFilterViewModel[0];
+            Search = new SearchViewModel();
+        }
+
         public int Draw { get; set; }
 
         public ColumnViewModel[] Columns { get; set; }

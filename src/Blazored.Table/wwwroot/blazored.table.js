@@ -143,44 +143,48 @@ __webpack_require__(/*! datatables.net-responsive-bs4 */ "./node_modules/datatab
 __webpack_require__(/*! datatables.net-scroller-bs4 */ "./node_modules/datatables.net-scroller-bs4/js/scroller.bootstrap4.js");
 var BlazoredTable = /** @class */ (function () {
     function BlazoredTable() {
-        this._tables = [];
-        this._instances = [];
+        // private _tables: Array<TableInstance> = [];
+        // private _instances: Array<Api> = [];
         this._obj = null;
+        // public destroy(id:string):void{
+        //     // var index = this._tables.findIndex(x => x.id == id);
+        //     // var table =  this._instances[index];
+        //     // table.destroy();
+        //     // this._tables.splice(index, 1);
+        // }
     }
-    //private dotNetHelper = window.DotNet;
-    BlazoredTable.prototype.create = function (id, options, assembly, method) {
-        var _this = this;
+    BlazoredTable.prototype.create = function (id, options, assembly, method, ajax, data) {
         this._obj = jquery_1.default("#" + id);
-        options.ajax = function (data, callback, settings) {
-            var result = _this.loadInfoFromServer(assembly, method, data);
-            result.then(function (f) {
-                //console.log("f: ", f); /* RESULTADO DEL SERVIDOR */
-                callback(f);
-            });
-        };
-        console.log("options", options);
+        if (method != null && method != '') {
+            options.ajax = function (data, callback, settings) {
+                var result = BlazoredTable.loadInfoFromServer(assembly, method, data);
+                result.then(function (f) { callback(f); });
+            };
+        }
+        else if (ajax != null) {
+            ajax.data = function (s) {
+                return JSON.stringify(s);
+            };
+            options.ajax = ajax;
+        }
+        else if (data != null) {
+            options.data = data;
+        }
         this._obj.DataTable(options);
-        this._instances.push(this._obj);
-        this._tables.push({ id: id, options: options });
+        // this._instances.push(this._obj);
+        // this._tables.push({id: id, options: options});
     };
-    BlazoredTable.prototype.loadInfoFromServer = function (assembly, method, data) {
+    BlazoredTable.loadInfoFromServer = function (assembly, method, data) {
         return __awaiter(this, void 0, void 0, function () {
-            var result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, window.DotNet.invokeMethodAsync(assembly, method, data)];
-                    case 1:
-                        result = _a.sent();
-                        return [2 /*return*/, result];
+                    case 1: 
+                    /*https://docs.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/call-dotnet-from-javascript?view=aspnetcore-6.0 */
+                    return [2 /*return*/, _a.sent()];
                 }
             });
         });
-    };
-    BlazoredTable.prototype.destroy = function (id) {
-        var index = this._tables.findIndex(function (x) { return x.id == id; });
-        var table = this._instances[index];
-        table.destroy();
-        this._tables.splice(index, 1);
     };
     return BlazoredTable;
 }());

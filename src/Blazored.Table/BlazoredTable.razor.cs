@@ -14,7 +14,6 @@ namespace Blazored.Table
 {
     public partial class BlazoredTable
     {
-
         [Inject]
         private IJSRuntime JsRuntime { get; set; }
 
@@ -36,6 +35,12 @@ namespace Blazored.Table
         [Parameter]
         public string Url { get; set; } = string.Empty;
 
+        [Parameter]
+        public string Type { get; set; } = "POST";
+
+        [Parameter]
+        public string ContentType { get; set; } = "application/json";
+
         private string _entryAssembly;
         private string _executingAssembly;
 
@@ -47,10 +52,9 @@ namespace Blazored.Table
 
         protected override async Task OnInitializedAsync()
         {
-            
             if (string.IsNullOrWhiteSpace(Id))
                 Id = Guid.NewGuid().ToString();
-            
+
             if (Settings == null)
                 Settings = new TableSettings()
                 {
@@ -59,11 +63,8 @@ namespace Blazored.Table
                     DeferRender = true,
                     Scroller = true,
                     ScrollY = "350px",
-                    ServerSide = true
+                    ServerSide = false
                 };
-            
-            if (string.IsNullOrWhiteSpace(Method))
-                Method = "GetDataAsync";
 
             await base.OnInitializedAsync();
         }
@@ -73,7 +74,28 @@ namespace Blazored.Table
             await base.OnAfterRenderAsync(firstRender);
             if (firstRender)
             {
-                await JsRuntime.InvokeVoidAsync($"BlazoredTable.create", Id, Settings, _entryAssembly, Method);
+                var identifier = $"BlazoredTable.create";
+
+                if (!string.IsNullOrWhiteSpace(Method))
+                {
+                    Settings.ServerSide = true;
+                    await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, _entryAssembly, Method, null, null);
+                }
+                else if (DataSource != null)
+                {
+                    Settings.ServerSide = false;
+                    await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, _entryAssembly, null, null, DataSource);
+                }
+                else if (!string.IsNullOrWhiteSpace(Url))
+                {
+                    Settings.ServerSide = true;
+                    Settings.Processing = true;
+                    await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, _entryAssembly, null, new {Url, Type, ContentType}, null);
+                }
+                else
+                {
+                    await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, _entryAssembly, null, null, null);
+                }
             }
         }
     }

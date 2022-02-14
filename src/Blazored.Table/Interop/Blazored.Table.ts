@@ -1,10 +1,12 @@
-import $ from 'jquery';
-import DataTables from 'datatables.net';
+import $
+    from 'jquery';
+import DataTables
+    from 'datatables.net';
 import 'datatables.net-bs4';
 import 'datatables.net-responsive-bs4';
 import 'datatables.net-scroller-bs4';
-import Settings  = DataTables.Settings;
-import Api = DataTables.Api;
+import Settings = DataTables.Settings;
+
 //import DotNet from '@microsoft/dotnet-js-interop';
 
 interface TableInstance {
@@ -14,43 +16,43 @@ interface TableInstance {
 
 export class BlazoredTable {
     
-    private _tables: Array<TableInstance> = [];
-    private _instances: Array<Api> = [];
+    // private _tables: Array<TableInstance> = [];
+    // private _instances: Array<Api> = [];
     private _obj: any = null;
 
-    //private dotNetHelper = window.DotNet;
-
-    public create(id: string, options: Settings, assembly: string, method: string): void {
+    public create(id: string, options: Settings, assembly: string, method: string, ajax:any, data: any): void {
         this._obj = $(`#${id}`);
-        options.ajax = (data: object, callback: ((data: any) => void), settings: DataTables.SettingsLegacy) => {
-            let result = this.loadInfoFromServer(assembly, method, data);
-            result.then((f: any) => {
-                //console.log("f: ", f); /* RESULTADO DEL SERVIDOR */
-                callback(f);
-            }) 
-
+        if (method != null && method != '') {
+            options.ajax = (data: object, callback: ((data: any) => void), settings: DataTables.SettingsLegacy) => {
+                let result = BlazoredTable.loadInfoFromServer(assembly, method, data);
+                result.then((f: any) => { callback(f);});
+            }
         }
-
-        console.log("options", options);
+        else if (ajax != null) {
+            ajax.data = function (s: any) {
+                return JSON.stringify(s);
+            };
+            options.ajax = ajax;
+        }
+        else if (data != null) {
+            options.data = data;
+        }
         this._obj.DataTable(options);
-        
-        this._instances.push(this._obj);
-        this._tables.push({id: id, options: options});
+        // this._instances.push(this._obj);
+        // this._tables.push({id: id, options: options});
     }
 
-    private async loadInfoFromServer(assembly: string, method: string, data: object): Promise<any> {
-        let result = await window.DotNet.invokeMethodAsync(assembly, method, data); /*https://docs.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/call-dotnet-from-javascript?view=aspnetcore-6.0 */
-        return result;
+    private static async loadInfoFromServer(assembly: string, method: string, data: object): Promise<any> {
+         /*https://docs.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/call-dotnet-from-javascript?view=aspnetcore-6.0 */
+        return await window.DotNet.invokeMethodAsync(assembly, method, data);
     }
 
-
-
-    public destroy(id:string):void{
-        var index = this._tables.findIndex(x => x.id == id);
-        var table =  this._instances[index];
-        table.destroy();
-        this._tables.splice(index, 1);
-    }
+    // public destroy(id:string):void{
+    //     // var index = this._tables.findIndex(x => x.id == id);
+    //     // var table =  this._instances[index];
+    //     // table.destroy();
+    //     // this._tables.splice(index, 1);
+    // }
 
 }
 
