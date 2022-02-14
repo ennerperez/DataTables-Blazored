@@ -1,23 +1,2 @@
 ﻿<table class="table" id="@Id">
-    @*<thead>
-    <tr>
-        @foreach (var column in Columns)
-        {
-            <th>@column</th>
-        }
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var row in Rows)
-    {
-        <tr>
-            @foreach (var column in Columns)
-            {
-                <td>
-                    @row.GetType().GetProperty(column)?.GetValue(row)
-                </td>
-            }
-        </tr>
-    }
-    </tbody> *@
 </table>

@@ -73,7 +73,7 @@ namespace Blazored.Table
             await base.OnAfterRenderAsync(firstRender);
             if (firstRender)
             {
-                await JsRuntime.InvokeVoidAsync($"{_executingAssembly}.create", Id, Settings, _entryAssembly, Method);
+                await JsRuntime.InvokeVoidAsync($"BlazoredTable.create", Id, Settings, _entryAssembly, Method);
             }
         }
     }

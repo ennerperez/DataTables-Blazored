@@ -1,6 +1,6 @@
 ﻿namespace Blazored.Table.Models
 {
-    public class RequestViewModel
+    public class TableRequestViewModel
     {
         public int Draw { get; set; }
 

@@ -46,9 +46,4 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Pages\Index.razor.cs">
-      <DependentUpon>Index.razor</DependentUpon>
-    </Compile>
-  </ItemGroup>
 </Project>

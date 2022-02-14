@@ -5,8 +5,7 @@
     <RazorLangVersion>3.0</RazorLangVersion>
 
     <Authors>Enner Pérez</Authors>
-    <Company></Company>
-    <Copyright>Copyright 2021 (c) Enner Pérez. All rights reserved.</Copyright>
+    <Copyright>Copyright 2022 (c) Enner Pérez. All rights reserved.</Copyright>
 
     <Description>A powerful and customizable table implementation for Blazor applications.</Description>
     <IncludeSymbols>true</IncludeSymbols>
