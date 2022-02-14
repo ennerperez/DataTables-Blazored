@@ -5,8 +5,7 @@
     <RazorLangVersion>3.0</RazorLangVersion>
 
     <Authors>Enner Pérez</Authors>
-    <Company></Company>
-    <Copyright>Copyright 2021 (c) Enner Pérez. All rights reserved.</Copyright>
+    <Copyright>Copyright 2022 (c) Enner Pérez. All rights reserved.</Copyright>
 
     <Description>A powerful and customizable table implementation for Blazor applications.</Description>
     <IncludeSymbols>true</IncludeSymbols>
@@ -39,7 +38,7 @@
   </Target>
 
   <Target Name="DebugRunWebPack" BeforeTargets="Build" Condition="$(Configuration) == 'Debug'">
-    <Exec Command="npm run-script build:debug" ContinueOnError="false" />
+    <Exec Command="npm run-script build:debug" ContinueOnError="true" />
   </Target>
 
   <Target Name="ReleaseRunWebPack" BeforeTargets="Build" Condition="$(Configuration) == 'Release'">
@@ -63,6 +62,7 @@
   <ItemGroup>
     <None Remove="Newtonsoft.Json" />
     <None Remove="Models\" />
+    <None Remove="Microsoft.TypeScript.MSBuild" />
   </ItemGroup>
   <ItemGroup>
     <None Include="icon.png" Pack="true" PackagePath="\" />
@@ -73,5 +73,11 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="BlazoredTable.razor.cs">
+      <DependentUpon>BlazoredTable.razor</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

@@ -7,18 +7,19 @@
     "watch": "webpack --watch --mode development --env.configuration=Debug"
   },
   "devDependencies": {
+    "@types/datatables.net": "^1.10.21",
+    "@types/jquery": "^3.5.3",
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.5",
     "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10",
-    "@types/jquery": "^3.5.3",
-    "@types/datatables.net": "^1.10.21"
+    "webpack-cli": "^3.3.10"
   },
   "dependencies": {
-    "jquery": "^3.5.3",
+    "@microsoft/dotnet-js-interop": "^6.0.1",
     "datatables.net": "^1.10.21",
-    "datatables.net-responsive-bs4": "^2.2.9",
     "datatables.net-bs4": "^1.11.3",
-    "datatables.net-scroller-bs4": "2.0.5"
+    "datatables.net-responsive-bs4": "^2.2.9",
+    "datatables.net-scroller-bs4": "2.0.5",
+    "jquery": "^3.5.3"
   }
 }

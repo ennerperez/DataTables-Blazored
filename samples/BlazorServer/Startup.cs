@@ -1,3 +1,4 @@
+using System.Net.Http;
 using Blazored.Table;
 using BlazorServer.Controllers;
 using BlazorServer.Data.Contexts;
@@ -27,6 +28,8 @@ namespace BlazorServer
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();
+            services.AddScoped(a => new HttpClient());
             
             services.AddDbContext<DefaultContext>(options =>
             {
@@ -36,7 +39,6 @@ namespace BlazorServer
             services.AddRazorPages();
             services.AddServerSideBlazor(o => o.DetailedErrors = true);
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-            services.AddScoped<IGenericRepository<Employee>, EmployeeRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
@@ -53,7 +55,7 @@ namespace BlazorServer
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

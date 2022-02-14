@@ -1,15 +1,14 @@
 using System;
-using System.Collections;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Blazored.Table.Models;
 using BlazorServer.Data.Entities;
-using BlazorServer.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlazorServer.Interfaces
 {
-    public interface IEmployeeRepository : IGenericRepository<Employee>
+    public interface IEmployeeRepository
     {
-        Task<AjaxResult> GetDataAsync<TResult>([FromBody] AjaxViewModel model, Expression<Func<Employee, TResult>> selector);
+        Task<TableResult> GetDataAsync<TResult>([FromBody] TableRequestViewModel model, Expression<Func<Employee, TResult>> selector = null);
     }
 }
