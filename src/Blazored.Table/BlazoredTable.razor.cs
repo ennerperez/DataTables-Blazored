@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -76,25 +76,28 @@ namespace Blazored.Table
             {
                 var identifier = $"BlazoredTable.create";
 
-                if (!string.IsNullOrWhiteSpace(Method))
+                if (Settings.Columns != null)
                 {
-                    Settings.ServerSide = true;
-                    await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, _entryAssembly, Method, null, null);
-                }
-                else if (DataSource != null)
-                {
-                    Settings.ServerSide = false;
-                    await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, _entryAssembly, null, null, DataSource);
-                }
-                else if (!string.IsNullOrWhiteSpace(Url))
-                {
-                    Settings.ServerSide = true;
-                    Settings.Processing = true;
-                    await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, _entryAssembly, null, new {Url, Type, ContentType}, null);
-                }
-                else
-                {
-                    await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, _entryAssembly, null, null, null);
+                    if (!string.IsNullOrWhiteSpace(Method))
+                    {
+                        Settings.ServerSide = true;
+                        await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, _entryAssembly, Method, null, null);
+                    }
+                    else if (DataSource != null)
+                    {
+                        Settings.ServerSide = false;
+                        await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, _entryAssembly, null, null, DataSource);
+                    }
+                    else if (!string.IsNullOrWhiteSpace(Url))
+                    {
+                        Settings.ServerSide = true;
+                        Settings.Processing = true;
+                        await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, _entryAssembly, null, new { Url, Type, ContentType }, null);
+                    }
+                    else
+                    {
+                        await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, _entryAssembly, null, null, null);
+                    }
                 }
             }
         }
