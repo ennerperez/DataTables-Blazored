@@ -141,24 +141,18 @@ var datatables_net_1 = __importDefault(__webpack_require__(/*! datatables.net */
 __webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js");
 __webpack_require__(/*! datatables.net-responsive-bs4 */ "./node_modules/datatables.net-responsive-bs4/js/responsive.bootstrap4.js");
 __webpack_require__(/*! datatables.net-scroller-bs4 */ "./node_modules/datatables.net-scroller-bs4/js/scroller.bootstrap4.js");
+//import DotNet from '@microsoft/dotnet-js-interop';
 var BlazoredTable = /** @class */ (function () {
     function BlazoredTable() {
-        // private _tables: Array<TableInstance> = [];
-        // private _instances: Array<Api> = [];
-        this._obj = null;
-        // public destroy(id:string):void{
-        //     // var index = this._tables.findIndex(x => x.id == id);
-        //     // var table =  this._instances[index];
-        //     // table.destroy();
-        //     // this._tables.splice(index, 1);
-        // }
+        this.table = null;
+        this.tableRef = null;
     }
-    BlazoredTable.prototype.create = function (id, options, assembly, method, ajax, data) {
-        this._obj = jquery_1.default("#" + id);
-        if (method != null && method != '') {
+    BlazoredTable.prototype.create = function (id, options, ajax, data, dotNet) {
+        this.table = jquery_1.default("#" + id);
+        if (dotNet !== null) {
             options.ajax = function (data, callback, settings) {
-                var result = BlazoredTable.loadInfoFromServer(assembly, method, data);
-                result.then(function (f) { callback(f); });
+                var result = BlazoredTable.loadInfoFromServer(data, dotNet);
+                result.then(function (f) { return callback(f); });
             };
         }
         else if (ajax != null) {
@@ -170,18 +164,17 @@ var BlazoredTable = /** @class */ (function () {
         else if (data != null) {
             options.data = data;
         }
-        this._obj.DataTable(options);
-        // this._instances.push(this._obj);
-        // this._tables.push({id: id, options: options});
+        this.tableRef = this.table.DataTable(options);
     };
-    BlazoredTable.loadInfoFromServer = function (assembly, method, data) {
+    BlazoredTable.prototype.reload = function () {
+        this.tableRef.ajax.reload();
+    };
+    BlazoredTable.loadInfoFromServer = function (data, dotNet) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, window.DotNet.invokeMethodAsync(assembly, method, data)];
-                    case 1: 
-                    /*https://docs.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/call-dotnet-from-javascript?view=aspnetcore-6.0 */
-                    return [2 /*return*/, _a.sent()];
+                    case 0: return [4 /*yield*/, dotNet.invokeMethodAsync('OnLoadAsync', data)];
+                    case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });

@@ -9,25 +9,25 @@ using System.Collections.Generic;
 using System.Reflection;
 using Newtonsoft.Json;
 using Blazored.Table.Models;
+using System.Diagnostics;
 
 namespace Blazored.Table
 {
-    public partial class BlazoredTable
+    public partial class BlazoredTable : IDisposable
     {
         [Inject]
         private IJSRuntime JsRuntime { get; set; }
 
-        [Parameter]
         public string Id { get; set; } = string.Empty;
 
         [Parameter]
-        public string Method { get; set; } = string.Empty;
+        public Func<TableRequestViewModel, Task<TableResult>> OnLoad { get; set; }
 
         [Parameter]
-        public ObservableCollection<object> DataSource { get; set; }
+        public IEnumerable<object> DataSource { get; set; }
 
         [Parameter]
-        public ObservableCollection<TableColumn> Columns { get; set; }
+        public IEnumerable<TableColumn> Columns { get; set; }
 
         [Parameter]
         public TableSettings Settings { get; set; }
@@ -41,13 +41,10 @@ namespace Blazored.Table
         [Parameter]
         public string ContentType { get; set; } = "application/json";
 
-        private string _entryAssembly;
-        private string _executingAssembly;
+        private DotNetObjectReference<BlazoredTable>? objRef;
 
         public BlazoredTable()
         {
-            _executingAssembly = Assembly.GetExecutingAssembly()?.GetName().Name;
-            _entryAssembly = Assembly.GetEntryAssembly()?.GetName().Name;
         }
 
         protected override async Task OnInitializedAsync()
@@ -55,51 +52,74 @@ namespace Blazored.Table
             if (string.IsNullOrWhiteSpace(Id))
                 Id = Guid.NewGuid().ToString();
 
-            if (Settings == null)
-                Settings = new TableSettings()
-                {
-                    Columns = Columns,
-                    Ordering = true,
-                    DeferRender = true,
-                    Scroller = true,
-                    ScrollY = "350px",
-                    ServerSide = false
-                };
-
             await base.OnInitializedAsync();
+        }
+
+        public async Task Reload()
+        {
+            await JsRuntime.InvokeVoidAsync("BlazoredTable.reload");
+        }
+
+        [JSInvokable]
+        public async Task<TableResult> OnLoadAsync(TableRequestViewModel tableRequest)
+        {
+            return await OnLoad(tableRequest);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await base.OnAfterRenderAsync(firstRender);
             if (firstRender)
             {
-                var identifier = $"BlazoredTable.create";
+                await initializeTable();
+            }
 
-                if (Settings.Columns != null)
+            await base.OnAfterRenderAsync(firstRender);
+        }
+
+        private async Task initializeTable()
+        {
+            Settings = new TableSettings()
+            {
+                Columns = Columns,
+                Ordering = true,
+                DeferRender = true,
+                Scroller = true,
+                ScrollY = "350px",
+                ServerSide = false
+            };
+
+            var identifier = $"BlazoredTable.create";
+
+            if (Settings.Columns != null)
+            {
+                if (OnLoad != null)
                 {
-                    if (!string.IsNullOrWhiteSpace(Method))
-                    {
-                        Settings.ServerSide = true;
-                        await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, _entryAssembly, Method, null, null);
-                    }
-                    else if (DataSource != null)
-                    {
-                        Settings.ServerSide = false;
-                        await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, _entryAssembly, null, null, DataSource);
-                    }
-                    else if (!string.IsNullOrWhiteSpace(Url))
-                    {
-                        Settings.ServerSide = true;
-                        Settings.Processing = true;
-                        await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, _entryAssembly, null, new { Url, Type, ContentType }, null);
-                    }
-                    else
-                    {
-                        await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, _entryAssembly, null, null, null);
-                    }
+                    Settings.ServerSide = true;
+                    if(objRef == null)
+                        objRef = DotNetObjectReference.Create(this);
+                    await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, null, null, objRef);
+                }
+                else if (DataSource != null)
+                {
+                    Settings.ServerSide = false;
+                    await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, null, DataSource, null);
+                }
+                else if (!string.IsNullOrWhiteSpace(Url))
+                {
+                    Settings.ServerSide = true;
+                    Settings.Processing = true;
+                    await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, new { Url, Type, ContentType }, null, null);
+                }
+                else
+                {
+                    await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, null, null, null);
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            objRef?.Dispose();
         }
     }
 }
