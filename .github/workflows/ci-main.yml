@@ -28,16 +28,16 @@ jobs:
           dotnet-version: ${{ env.NETCORE_VERSION }}
 
       - name: Restore
-        run: dotnet restore
+        run: dotnet restore src/Blazored.$PROJECT_NAME.sln
 
       - name: Build
         run: dotnet build -c Release --no-restore src/Blazored.$PROJECT_NAME/Blazored.$PROJECT_NAME.csproj
 
       - name: Test
-        run: dotnet test -c Release
+        run: dotnet test -c Release src/Blazored.$PROJECT_NAME.sln
 
       - name: Pack
-        run: dotnet pack -v normal -c Release --no-restore --include-symbols --include-source -p:PackageVersion=$GITHUB_RUN_ID src/Blazored.$PROJECT_NAME/Blazored.$PROJECT_NAME.*proj
+        run: dotnet pack -v normal -c Release --no-restore --include-symbols --include-source -p:PackageVersion=$GITHUB_RUN_ID src/Blazored.$PROJECT_NAME/Blazored.$PROJECT_NAME.csproj
 
       - name: Publish Sample Site
         run: dotnet publish -c Release samples/BlazorWebAssembly/BlazorWebAssembly.csproj
