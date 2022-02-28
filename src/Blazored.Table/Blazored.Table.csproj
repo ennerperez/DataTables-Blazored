@@ -1,0 +1,74 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RazorLangVersion>3.0</RazorLangVersion>
+
+    <Authors>Enner Pérez</Authors>
+    <Copyright>Copyright 2022 (c) All rights reserved.</Copyright>
+
+    <Description>A powerful and customizable table implementation for Blazor applications.</Description>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+    <!-- NuGet settings -->
+    <PackageId>Blazored.Table</PackageId>
+    <PackageTags>Blazored;Blazor;Razor;Components;Table;Dialogue;ASP.NET Core;CSharp;Web</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/ennerperez/Blazored-Table</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/ennerperez/Blazored-Table</RepositoryUrl>
+
+    <!-- SourceLink settings -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <RootNamespace>Blazored.Table</RootNamespace>
+    
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- File with mtime of last successful npm install -->
+    <NpmInstallStampFile>node_modules/.install-stamp</NpmInstallStampFile>
+  </PropertyGroup>
+
+  <Target Name="NpmInstall" BeforeTargets="BeforeBuild" Inputs="package.json" Outputs="$(NpmInstallStampFile)">
+    <Exec Command="npm install" ContinueOnError="true" />
+    <Touch Files="$(NpmInstallStampFile)" AlwaysCreate="true" />
+  </Target>
+
+  <Target Name="DebugRunWebPack" BeforeTargets="Build" Condition="$(Configuration) == 'Debug'">
+    <Exec Command="npm run-script build:debug" ContinueOnError="true" />
+  </Target>
+
+  <Target Name="ReleaseRunWebPack" BeforeTargets="Build" Condition="$(Configuration) == 'Release'">
+    <Exec Command="npm run-script build:release" ContinueOnError="false" />
+  </Target>
+
+  <ItemGroup>
+    <Content Remove="package-lock.json" />
+    <Content Remove="package.json" />
+    <Content Remove="tsconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.22" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.22" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.22" />
+    <PackageReference Include="Microsoft.JSInterop.WebAssembly" Version="3.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="BlazoredTable.razor.cs">
+      <DependentUpon>BlazoredTable.razor</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="\" />
+    <None Include="package-lock.json" />
+    <None Include="package.json" />
+    <None Include="tsconfig.json" />
+  </ItemGroup>
+  
+</Project>

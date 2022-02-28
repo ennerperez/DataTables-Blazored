@@ -1,0 +1,42 @@
+﻿@page "/url"
+@using System.Collections.ObjectModel
+@using System.ComponentModel
+@using System.ComponentModel.DataAnnotations
+@using System.Reflection
+@using Blazored.Table.Models
+@using BlazorShared.Data.Entities
+
+<h1>Blazored Table Sample</h1>
+
+<hr class="mb-5"/>
+
+<p>
+    This is an example of using Blazored Table with Ajax source.
+</p>
+
+<BlazoredTable Url="/api/Employee/Data" Type="POST" ContentType="application/json" Columns="Columns" @ref="_table"/>
+
+@code {
+
+    public ObservableCollection<TableColumn> Columns { get; set; }
+    
+    private BlazoredTable _table;
+
+    [Parameter]
+    public ObservableCollection<object> Employees { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var columns = typeof(Employee).GetProperties().Select(m => new
+        {
+            m.Name,
+            Data = char.ToLower(m.Name[0]) + m.Name.Substring(1),
+            Display = m.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? m.Name,
+            Format = m.GetCustomAttribute<DisplayFormatAttribute>()?.DataFormatString ?? "{0:0.00}",
+        });
+        Columns = new ObservableCollection<TableColumn>(columns.Select(m => new TableColumn() {Title = m.Display, Data = m.Data, Name = m.Name, Format = m.Format}));
+
+        await base.OnInitializedAsync();
+    }
+
+}
