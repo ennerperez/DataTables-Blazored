@@ -1,8 +1,5 @@
 using System.Net.Http;
-using Blazored.Table;
-using BlazorServer.Controllers;
-using BlazorServer.Data.Contexts;
-using BlazorServer.Data.Entities;
+using BlazorShared.Data.Contexts;
 using BlazorServer.Interfaces;
 using BlazorServer.Services;
 using Microsoft.AspNetCore.Builder;

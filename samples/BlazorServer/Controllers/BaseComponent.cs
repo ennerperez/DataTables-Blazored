@@ -1,5 +1,5 @@
 using System;
-using BlazorServer.Data.Contexts;
+using BlazorShared.Data.Contexts;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 

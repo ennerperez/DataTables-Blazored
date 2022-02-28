@@ -1,10 +1,10 @@
-﻿using BlazorServer.Data.Contexts;
-using BlazorServer.Data.Entities;
+﻿using BlazorShared.Data.Contexts;
+using BlazorShared.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace BlazorServer.Data.Configurations
+namespace BlazorShared.Data.Configurations
 {
     
     [DbContext(typeof(DefaultContext))]

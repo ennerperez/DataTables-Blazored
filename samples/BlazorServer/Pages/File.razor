@@ -6,7 +6,7 @@
 @using System.Linq.Expressions
 @using System.Reflection
 @using Blazored.Table.Models
-@using BlazorServer.Data.Entities
+@using BlazorShared.Data.Entities
 
 <h1>Blazored Table Sample</h1>
 
@@ -16,12 +16,14 @@
     This is an example of using Blazored Table with file source.
 </p>
 
-<BlazoredTable Id="Example2" DataSource="Employees" Columns="Columns"/>
+<BlazoredTable Columns="Columns" DataSource="Employees" @ref="_table" />
 
 @code {
 
-    public static ObservableCollection<TableColumn> Columns { get; set; }
-    public static Expression<Func<Employee, object>> Selector { get; set; }
+    public ObservableCollection<TableColumn> Columns { get; set; }
+    public Expression<Func<Employee, object>> Selector { get; set; }
+    
+    private BlazoredTable _table;
     
     [Parameter]
     public ObservableCollection<object> Employees { get; set; }

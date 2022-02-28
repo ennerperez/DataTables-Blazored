@@ -4,7 +4,7 @@
 @using System.ComponentModel.DataAnnotations
 @using System.Reflection
 @using Blazored.Table.Models
-@using BlazorServer.Data.Entities
+@using BlazorShared.Data.Entities
 
 <h1>Blazored Table Sample</h1>
 
@@ -14,11 +14,13 @@
     This is an example of using Blazored Table with Ajax source.
 </p>
 
-<BlazoredTable Id="Example3" Url="/api/Employee/Data" Type="POST" ContentType="application/json" Columns="Columns"/>
+<BlazoredTable Url="/api/Employee/Data" Type="POST" ContentType="application/json" Columns="Columns" @ref="_table"/>
 
 @code {
 
-    public static ObservableCollection<TableColumn> Columns { get; set; }
+    public ObservableCollection<TableColumn> Columns { get; set; }
+    
+    private BlazoredTable _table;
 
     [Parameter]
     public ObservableCollection<object> Employees { get; set; }

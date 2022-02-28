@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data.Common;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.Data.Sqlite;
@@ -8,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 
-namespace BlazorServer.Data.Contexts
+namespace BlazorShared.Data.Contexts
 {
     public class DefaultContext : DbContext
     {
@@ -39,7 +38,7 @@ namespace BlazorServer.Data.Contexts
             if (_options == null)
             {
                 var config = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
+                    //.SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
 #if DEBUG
                     .AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true)

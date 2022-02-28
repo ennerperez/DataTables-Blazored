@@ -5,11 +5,11 @@
 @using System.Linq.Expressions
 @using System.Reflection
 @using Blazored.Table.Models
-@using BlazorServer.Data.Entities
+@using BlazorShared.Data.Entities
 @using BlazorServer.Interfaces
 @using Microsoft.AspNetCore.Http
-@using Microsoft.Extensions.DependencyInjection
 @inject IHttpContextAccessor _httpContextAccessor
+@inject IEmployeeRepository _employeeRepository
 
 <h1>Blazored Table Sample</h1>
 
@@ -19,16 +19,17 @@
     This is an example of using Blazored Table in its most simplistic form.
 </p>
 
-<BlazoredTable Id="Example1" Method="GetDataAsync" Columns="Columns"/>
+<BlazoredTable Columns="Columns" OnLoad="GetData" @ref="_table"/>
 
 @code {
 
-    public static ObservableCollection<TableColumn> Columns { get; set; }
-    public static Expression<Func<Employee, object>> Selector { get; set; }
+    public ObservableCollection<TableColumn> Columns { get; set; }
+    public Expression<Func<Employee, object>> Selector { get; set; }
+    
+    private BlazoredTable _table;
 
     protected override async Task OnInitializedAsync()
     {
-        Repository = _httpContextAccessor.HttpContext.RequestServices.GetService<IEmployeeRepository>();
         
         Selector = s => new {s.Id, s.FirstName, s.LastName, s.Office, s.Position, s.StartDate, s.Salary};
 
@@ -44,13 +45,10 @@
         await base.OnInitializedAsync();
     }
 
-    public static IEmployeeRepository Repository;
-
-    [JSInvokable]
-    public static async Task<TableResult> GetDataAsync(TableRequestViewModel data = null)
+    public async Task<TableResult> GetData(TableRequestViewModel request = null)
     {
-        var newData = await Repository.GetDataAsync(data, Selector);
-        return newData;
+        var data = await _employeeRepository.GetDataAsync(request, Selector);
+        return data;
     }
 
 }
