@@ -10,7 +10,7 @@ env:
   NETCORE_VERSION: "5.0.102"
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
-  PROJECT_NAME: Table
+  PROJECT_NAME: DataTables
   NUGET_FEED: https://api.nuget.org/v3/index.json
   NUGET_KEY: ${{ secrets.NUGET_KEY }}
 
@@ -28,16 +28,16 @@ jobs:
           dotnet-version: ${{ env.NETCORE_VERSION }}
 
       - name: Restore
-        run: dotnet restore src/Blazored.$PROJECT_NAME.sln
+        run: dotnet restore
 
       - name: Build
-        run: dotnet build -c Release --no-restore src/Blazored.$PROJECT_NAME/Blazored.$PROJECT_NAME.csproj
+        run: dotnet build -c Release --no-restore src/$PROJECT_NAME.Blazored/$PROJECT_NAME.Blazored.csproj
 
       - name: Test
-        run: dotnet test -c Release src/Blazored.$PROJECT_NAME.sln
+        run: dotnet test -c Release
 
       - name: Pack
-        run: dotnet pack -v normal -c Release --no-restore --include-symbols --include-source -p:PackageVersion=$GITHUB_RUN_ID src/Blazored.$PROJECT_NAME/Blazored.$PROJECT_NAME.csproj
+        run: dotnet pack -v normal -c Release --no-restore --include-symbols --include-source -p:PackageVersion=$GITHUB_RUN_ID src/$PROJECT_NAME.Blazored/$PROJECT_NAME.Blazored.csproj
 
       - name: Publish Sample Site
         run: dotnet publish -c Release samples/BlazorWebAssembly/BlazorWebAssembly.csproj
@@ -52,7 +52,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: nupkg
-          path: ./src/Blazored.${{ env.PROJECT_NAME }}/bin/Release/*.nupkg
+          path: ./src/${{ env.PROJECT_NAME }}.Blazored/bin/Release/*.nupkg
   prerelease:
     needs: build
     if: github.event_name != 'release'
@@ -79,6 +79,6 @@ jobs:
           echo Version: $VERSION
           VERSION="${VERSION//v}"
           echo Clean Version: $VERSION
-          dotnet pack -v normal -c Release --include-symbols --include-source -p:PackageVersion=$VERSION -o nupkg src/Blazored.$PROJECT_NAME/Blazored.$PROJECT_NAME.*proj
+          dotnet pack -v normal -c Release --include-symbols --include-source -p:PackageVersion=$VERSION -o nupkg src/$PROJECT_NAME.Blazored/$PROJECT_NAME.Blazored.csproj
       - name: Push to NuGet Feed
         run: dotnet nuget push ./nupkg/*.nupkg --source $NUGET_FEED --skip-duplicate --api-key $NUGET_KEY

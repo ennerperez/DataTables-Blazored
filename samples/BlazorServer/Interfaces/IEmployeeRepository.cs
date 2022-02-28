@@ -1,7 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Blazored.Table.Models;
+using DataTables.Blazored.Models;
 using BlazorShared.Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 

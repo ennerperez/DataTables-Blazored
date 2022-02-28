@@ -7,12 +7,12 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Blazored Table (Server)</title>
+    <title>DataTable Blazored (Server)</title>
     <base href="~/"/>
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css"/>
-    <link href="_content/Blazored.Table/blazored-table.css" rel="stylesheet"/>
-    <link href="_content/Blazored.Table/blazored-table-bs4.css" rel="stylesheet"/>
-    <link href="_content/Blazored.Table/blazored-table-responsive-bs4.css" rel="stylesheet"/>
+    <link href="_content/DataTables.Blazored/datatables-blazored.css" rel="stylesheet"/>
+    <link href="_content/DataTables.Blazored/datatables-blazored-bs4.css" rel="stylesheet"/>
+    <link href="_content/DataTables.Blazored/datatables-blazored-responsive-bs4.css" rel="stylesheet"/>
     <link href="https://cdn.datatables.net/scroller/2.0.5/css/scroller.dataTables.min.css" rel="stylesheet"/>
     <link href="css/site.css" rel="stylesheet"/>
 </head>
@@ -27,14 +27,6 @@
         }
     </script>
 <script src="_framework/blazor.server.js"></script>
-<script src="_content/Blazored.Table/blazored.table.js"></script>
-<script>
-window.GetDataAsync = () => {
-    DotNet.invokeMethodAsync('BlazorServer', 'GetDataAsync')
-        .then(data => {
-            console.log(data);
-        });
-};
-</script>
+<script src="_content/DataTables.Blazored/datatables-blazored.js"></script>
 </body>
 </html>
