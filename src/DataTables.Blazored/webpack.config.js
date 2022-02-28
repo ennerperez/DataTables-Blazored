@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = env => {
 
     return {
-        entry: './Interop/Blazored.Table.ts',
+        entry: './Interop/DataTables.Blazored.ts',
         devtool: env && env.production ? 'none' : 'source-map',
         module: {
             rules: [
@@ -18,7 +18,7 @@ module.exports = env => {
             extensions: ['.tsx', '.ts', '.js'],
         },
         output: {
-            filename: 'blazored.table.js',
+            filename: 'datatables-blazored.js',
             path: path.resolve(__dirname, 'wwwroot'),
         },
     };

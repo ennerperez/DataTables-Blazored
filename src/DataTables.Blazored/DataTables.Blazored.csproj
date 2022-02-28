@@ -12,7 +12,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
     <!-- NuGet settings -->
-    <PackageId>Blazored.Table</PackageId>
+    <PackageId>DataTables.Blazored</PackageId>
     <PackageTags>Blazored;Blazor;Razor;Components;Table;Dialogue;ASP.NET Core;CSharp;Web</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/ennerperez/Blazored-Table</PackageProjectUrl>
@@ -23,7 +23,7 @@
     <!-- SourceLink settings -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <RootNamespace>Blazored.Table</RootNamespace>
+    <RootNamespace>DataTables.Blazored</RootNamespace>
     
   </PropertyGroup>
 
@@ -38,7 +38,7 @@
   </Target>
 
   <Target Name="DebugRunWebPack" BeforeTargets="Build" Condition="$(Configuration) == 'Debug'">
-    <Exec Command="npm run-script build:debug" ContinueOnError="true" />
+    <Exec Command="npm run-script build:debug" ContinueOnError="false" />
   </Target>
 
   <Target Name="ReleaseRunWebPack" BeforeTargets="Build" Condition="$(Configuration) == 'Release'">
@@ -59,8 +59,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="BlazoredTable.razor.cs">
-      <DependentUpon>BlazoredTable.razor</DependentUpon>
+    <Compile Update="DataTable.razor.cs">
+      <DependentUpon>DataTable.razor</DependentUpon>
     </Compile>
   </ItemGroup>
 

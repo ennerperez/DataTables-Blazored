@@ -1,9 +1,9 @@
 using Bunit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Components;
-using Blazored.Table.Tests.Assets;
+using DataTables.Blazored.Tests.Assets;
 
-namespace Blazored.Table.Tests
+namespace DataTables.Blazored.Tests
 {
     public class DisplayTests : TestContext
     {

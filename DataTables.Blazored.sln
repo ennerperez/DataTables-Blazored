@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A0757AA0-1E99-461D-AD69-E49657419B99}"
 	ProjectSection(SolutionItems) = preProject
-		..\README.md = ..\README.md
+		README.md = README.md
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
@@ -11,33 +11,33 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{6206
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2A6D13DA-B4C3-4B21-AA96-3BEAEF1EEDBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazored.Table", "Blazored.Table\Blazored.Table.csproj", "{EFDC7396-BBA0-42F4-9D63-DC9DEB4FA7E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataTables.Blazored", "src\DataTables.Blazored\DataTables.Blazored.csproj", "{EFDC7396-BBA0-42F4-9D63-DC9DEB4FA7E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorServer", "..\samples\BlazorServer\BlazorServer.csproj", "{2B175560-DD0F-4565-AC25-DD8F7AAB3E29}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorServer", "samples\BlazorServer\BlazorServer.csproj", "{2B175560-DD0F-4565-AC25-DD8F7AAB3E29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorWebAssembly", "..\samples\BlazorWebAssembly\BlazorWebAssembly.csproj", "{A0289462-6613-442E-9388-98B4CA89B511}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorWebAssembly", "samples\BlazorWebAssembly\BlazorWebAssembly.csproj", "{A0289462-6613-442E-9388-98B4CA89B511}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazored.Table.Tests", "..\tests\src\Blazored.Table.Tests\Blazored.Table.Tests.csproj", "{D9409030-D4C6-423D-BCBF-39B0B1E8504F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataTables.Blazored.Tests", "tests\src\DataTables.Blazored.Tests\DataTables.Blazored.Tests.csproj", "{D9409030-D4C6-423D-BCBF-39B0B1E8504F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorShared", "..\samples\BlazorShared\BlazorShared.csproj", "{DBDA69F3-88A8-426B-AD67-AE5B33F5DD9E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorShared", "samples\BlazorShared\BlazorShared.csproj", "{DBDA69F3-88A8-426B-AD67-AE5B33F5DD9E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{9EDBA92E-B1BA-4F75-94F2-E75C7A26DC8E}"
 	ProjectSection(SolutionItems) = preProject
-		..\.github\FUNDING.yml = ..\.github\FUNDING.yml
-		..\.github\release-drafter.yml = ..\.github\release-drafter.yml
+		.github\FUNDING.yml = .github\FUNDING.yml
+		.github\release-drafter.yml = .github\release-drafter.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEMPLATE", "{5B760719-B506-4758-8098-D44C8CE44CC5}"
 	ProjectSection(SolutionItems) = preProject
-		..\.github\ISSUE_TEMPLATE\bug_report.md = ..\.github\ISSUE_TEMPLATE\bug_report.md
-		..\.github\ISSUE_TEMPLATE\feature_request.md = ..\.github\ISSUE_TEMPLATE\feature_request.md
+		.github\ISSUE_TEMPLATE\bug_report.md = .github\ISSUE_TEMPLATE\bug_report.md
+		.github\ISSUE_TEMPLATE\feature_request.md = .github\ISSUE_TEMPLATE\feature_request.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{3DD2F101-7F9D-4255-943B-321F818BAEDF}"
 	ProjectSection(SolutionItems) = preProject
-		..\.github\workflows\ci-main.yml = ..\.github\workflows\ci-main.yml
-		..\.github\workflows\ci-pr.yml = ..\.github\workflows\ci-pr.yml
-		..\.github\workflows\release-drafter.yml = ..\.github\workflows\release-drafter.yml
+		.github\workflows\ci-main.yml = .github\workflows\ci-main.yml
+		.github\workflows\ci-pr.yml = .github\workflows\ci-pr.yml
+		.github\workflows\release-drafter.yml = .github\workflows\release-drafter.yml
 	EndProjectSection
 EndProject
 Global

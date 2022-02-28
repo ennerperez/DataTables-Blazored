@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace Blazored.Table.Tests.Assets
+namespace DataTables.Blazored.Tests.Assets
 {
     internal class MockNavigationManager : NavigationManager
     {

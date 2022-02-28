@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Blazored.Table.Models
+namespace DataTables.Blazored.Models
 {
     public class TableResult : TableResult<object>
     {

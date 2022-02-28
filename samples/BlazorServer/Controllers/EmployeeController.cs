@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Blazored.Table.Models;
+using DataTables.Blazored.Models;
 using BlazorServer.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
