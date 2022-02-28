@@ -6,7 +6,7 @@ using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
-using Blazored.Table.Models;
+using DataTables.Blazored.Models;
 using BlazorShared.Data.Contexts;
 using BlazorShared.Data.Entities;
 using BlazorServer.Interfaces;

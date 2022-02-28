@@ -5,7 +5,7 @@ on:
     branches: [master]
 
 env:
-    PROJECT_NAME: Blazored.Table
+    PROJECT_NAME: DataTables
     NETCORE_VERSION: '5.0.102'
 
 jobs:
@@ -24,7 +24,7 @@ jobs:
       run: dotnet restore
 
     - name: Building project...
-      run: dotnet build --configuration Release --no-restore src/$PROJECT_NAME/$PROJECT_NAME.csproj
+      run: dotnet build --configuration Release --no-restore src/$PROJECT_NAME.Blazored/$PROJECT_NAME.Blazored.csproj
 
     - name: Testing...
       run: dotnet test --no-restore --verbosity normal

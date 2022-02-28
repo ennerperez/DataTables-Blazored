@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BlazorShared\BlazorShared.csproj"/>
-    <ProjectReference Include="..\..\src\Blazored.Table\Blazored.Table.csproj"/>
+    <ProjectReference Include="..\..\src\DataTables.Blazored\DataTables.Blazored.csproj"/>
   </ItemGroup>
 
 </Project>

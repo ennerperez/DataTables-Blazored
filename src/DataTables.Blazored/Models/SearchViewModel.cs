@@ -1,4 +1,4 @@
-﻿namespace Blazored.Table.Models
+﻿namespace DataTables.Blazored.Models
 {
     public class SearchViewModel
     {

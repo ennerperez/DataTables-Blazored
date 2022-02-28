@@ -1,9 +1,9 @@
-﻿using Blazored.Table.Tests.Assets;
+﻿using DataTables.Blazored.Tests.Assets;
 using Bunit;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Blazored.Table.Tests
+namespace DataTables.Blazored.Tests
 {
     public class TableOptionsTests : TestContext
     {

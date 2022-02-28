@@ -7,7 +7,7 @@ import Settings = DataTables.Settings;
 
 //import DotNet from '@microsoft/dotnet-js-interop';
 
-export class BlazoredTable {
+export class Table {
     
     private table: any = null;
     private tableRef: any = null;
@@ -17,7 +17,7 @@ export class BlazoredTable {
 
         if (dotNet !== null) {
            options.ajax = (data: object, callback: ((data: any) => void), settings: DataTables.SettingsLegacy) => {
-               let result = BlazoredTable.loadInfoFromServer(data, dotNet);
+               let result = Table.loadInfoFromServer(data, dotNet);
                result.then(f => callback(f));
            }
         }
@@ -44,12 +44,12 @@ export class BlazoredTable {
 }
 
 declare global {
-    interface Window { 
-        BlazoredTable: BlazoredTable;
+    interface Window {
+        Table: Table;
         DataTables: DataTables<any>;
         DotNet: any;
     }
 }
 
-window.BlazoredTable = new BlazoredTable();
+window.Table = new Table();
 window.DataTables = DataTables;
