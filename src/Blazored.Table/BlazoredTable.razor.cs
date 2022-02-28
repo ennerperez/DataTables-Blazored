@@ -7,7 +7,6 @@ using Microsoft.JSInterop;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Reflection;
-using Newtonsoft.Json;
 using Blazored.Table.Models;
 using System.Diagnostics;
 
