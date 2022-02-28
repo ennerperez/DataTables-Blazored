@@ -41,11 +41,7 @@ namespace Blazored.Table
         [Parameter]
         public string ContentType { get; set; } = "application/json";
 
-        private DotNetObjectReference<BlazoredTable>? objRef;
-
-        public BlazoredTable()
-        {
-        }
+        private DotNetObjectReference<BlazoredTable> _objRef;
 
         protected override async Task OnInitializedAsync()
         {
@@ -70,13 +66,13 @@ namespace Blazored.Table
         {
             if (firstRender)
             {
-                await initializeTable();
+                await InitializeTable();
             }
 
             await base.OnAfterRenderAsync(firstRender);
         }
 
-        private async Task initializeTable()
+        private async Task InitializeTable()
         {
             Settings = new TableSettings()
             {
@@ -95,9 +91,9 @@ namespace Blazored.Table
                 if (OnLoad != null)
                 {
                     Settings.ServerSide = true;
-                    if(objRef == null)
-                        objRef = DotNetObjectReference.Create(this);
-                    await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, null, null, objRef);
+                    if(_objRef == null)
+                        _objRef = DotNetObjectReference.Create(this);
+                    await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, null, null, _objRef);
                 }
                 else if (DataSource != null)
                 {
@@ -119,7 +115,7 @@ namespace Blazored.Table
 
         public void Dispose()
         {
-            objRef?.Dispose();
+            _objRef?.Dispose();
         }
     }
 }
