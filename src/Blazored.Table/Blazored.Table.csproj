@@ -5,7 +5,7 @@
     <RazorLangVersion>3.0</RazorLangVersion>
 
     <Authors>Enner Pérez</Authors>
-    <Copyright>Copyright 2022 (c) Enner Pérez. All rights reserved.</Copyright>
+    <Copyright>Copyright 2022 (c) All rights reserved.</Copyright>
 
     <Description>A powerful and customizable table implementation for Blazor applications.</Description>
     <IncludeSymbols>true</IncludeSymbols>
@@ -46,12 +46,6 @@
   </Target>
 
   <ItemGroup>
-    <Content Remove="package-lock.json" />
-    <Content Remove="package.json" />
-    <Content Remove="tsconfig.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.22" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.22" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.22" />
@@ -60,24 +54,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Newtonsoft.Json" />
-    <None Remove="Models\" />
-    <None Remove="Microsoft.TypeScript.MSBuild" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="icon.png" Pack="true" PackagePath="\" />
-    <None Include="package-lock.json" />
-    <None Include="package.json" />
-    <None Include="tsconfig.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="BlazoredTable.razor.cs">
       <DependentUpon>BlazoredTable.razor</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="package-lock.json">
+      <DependentUpon>package.json</DependentUpon>
+    </Content>
   </ItemGroup>
 </Project>
