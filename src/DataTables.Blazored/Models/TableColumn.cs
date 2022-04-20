@@ -1,4 +1,4 @@
-﻿namespace DataTables.Blazored.Models
+namespace DataTables.Blazored.Models
 {
     public class TableColumn
     {

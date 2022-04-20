@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using DataTables.Blazored.Models;
 using BlazorServer.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -28,8 +28,7 @@ namespace BlazorServer.Controllers
                 s.LastName,
                 s.Office,
                 s.Position,
-                s.StartDate,
-                s.Salary
+                s.StartDate
             });
             return new JsonResult(data);
         }

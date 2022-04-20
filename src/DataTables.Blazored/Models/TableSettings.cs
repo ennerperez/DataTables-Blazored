@@ -11,6 +11,7 @@ namespace DataTables.Blazored.Models
         public bool? Scroller { get; set; }
         public bool? ServerSide { get; set; }
         public IEnumerable<TableColumn> Columns { get; set; }
+        public IEnumerable<TableColumnDefs> ColumnsDefs { get; set; }
         public bool? Processing { get; set; }
     }
 }

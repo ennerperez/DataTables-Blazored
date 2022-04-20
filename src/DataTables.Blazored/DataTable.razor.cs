@@ -18,10 +18,16 @@ namespace DataTables.Blazored
         public Func<TableRequestViewModel, Task<TableResult>> OnLoad { get; set; }
 
         [Parameter]
+        public Func<object, Task<bool>> OnRowSelected { get; set; }
+
+        [Parameter]
         public IEnumerable<object> DataSource { get; set; }
 
         [Parameter]
         public IEnumerable<TableColumn> Columns { get; set; }
+
+        [Parameter]
+        public IEnumerable<TableColumnDefs> ColumnsDefs { get; set; }
 
         [Parameter]
         public TableSettings Settings { get; set; }
@@ -54,6 +60,12 @@ namespace DataTables.Blazored
         public async Task<TableResult> OnLoadAsync(TableRequestViewModel tableRequest)
         {
             return await OnLoad(tableRequest);
+        }
+
+        [JSInvokable]
+        public async Task<bool> OnRowSelectedAsync(object tableRequest)
+        {
+            return await OnRowSelected(tableRequest);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
