@@ -10,7 +10,7 @@ namespace DataTables.Blazored.Models
         public bool? DeferRender { get; set; }
         public bool? Scroller { get; set; }
         public bool? ServerSide { get; set; }
-        public IEnumerable<TableColumn> Columns { get; set; }
+        public IEnumerable<Column> Columns { get; set; }
         public bool? Processing { get; set; }
     }
 }

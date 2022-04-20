@@ -21,7 +21,7 @@ namespace DataTables.Blazored
         public IEnumerable<object> DataSource { get; set; }
 
         [Parameter]
-        public IEnumerable<TableColumn> Columns { get; set; }
+        public List<Column> Columns { get; set; }
 
         [Parameter]
         public TableSettings Settings { get; set; }
