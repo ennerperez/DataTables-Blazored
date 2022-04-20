@@ -13,5 +13,6 @@ namespace DataTables.Blazored.Models
         public IEnumerable<TableColumn> Columns { get; set; }
         public IEnumerable<TableColumnDefs> ColumnsDefs { get; set; }
         public bool? Processing { get; set; }
+        public bool? Responsive { get; set; }
     }
 }

@@ -39,7 +39,7 @@ export class Table {
            ajax.data = function (s: any) {
                return JSON.stringify(s);
            };
-           options.ajax = ajax;
+            options.ajax = ajax;
         }
         else if (data != null) {
            options.data = data;
