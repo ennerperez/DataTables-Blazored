@@ -10,10 +10,7 @@
     <title>DataTable Blazored (Server)</title>
     <base href="~/"/>
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css"/>
-    <link href="_content/DataTables.Blazored/datatables-blazored.css" rel="stylesheet"/>
-    <link href="_content/DataTables.Blazored/datatables-blazored-bs4.css" rel="stylesheet"/>
-    <link href="_content/DataTables.Blazored/datatables-blazored-responsive-bs4.css" rel="stylesheet"/>
-    <link href="https://cdn.datatables.net/scroller/2.0.5/css/scroller.dataTables.min.css" rel="stylesheet"/>
+    <link href="_content/DataTables.Blazored/css/datatables-blazored.css" rel="stylesheet"/>
     <link href="css/site.css" rel="stylesheet"/>
 </head>
 <body>
@@ -25,8 +22,9 @@
         if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
             document.write('<script src="js/blazor.polyfill.min.js"><\/script>');
         }
-    </script>
+</script>
 <script src="_framework/blazor.server.js"></script>
-<script src="_content/DataTables.Blazored/datatables-blazored.js"></script>
+<script src="_content/DataTables.Blazored/js/datatables-blazored.js"></script>
+<script src="_content/DataTables.Blazored/js/datatables-blazored-bs4.js"></script>
 </body>
 </html>

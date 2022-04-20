@@ -1,11 +1,21 @@
 import $ from 'jquery';
 import DataTables from 'datatables.net';
-import 'datatables.net-bs4';
-import 'datatables.net-responsive-bs4';
-import 'datatables.net-scroller-bs4';
 import Settings = DataTables.Settings;
 
-//import DotNet from '@microsoft/dotnet-js-interop';
+import "datatables.net-autofill";
+import "datatables.net-buttons";
+import "datatables.net-colreorder";
+import "datatables.net-fixedcolumns";
+import "datatables.net-fixedheader";
+import "datatables.net-keytable";
+import "datatables.net-responsive";
+import "datatables.net-rowgroup";
+import "datatables.net-rowreorder";
+import "datatables.net-scroller";
+import "datatables.net-searchbuilder";
+import "datatables.net-searchpanes";
+import "datatables.net-staterestore";
+import "datatables.net-select";
 
 export class Table {
     

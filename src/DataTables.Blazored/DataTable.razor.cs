@@ -68,15 +68,16 @@ namespace DataTables.Blazored
 
         private async Task InitializeTable()
         {
-            Settings = new TableSettings()
-            {
-                Columns = Columns,
-                Ordering = true,
-                DeferRender = true,
-                Scroller = true,
-                ScrollY = "350px",
-                ServerSide = false
-            };
+            if (Settings == null)
+                Settings = new TableSettings()
+                {
+                    Columns = Columns,
+                    Ordering = true,
+                    DeferRender = true,
+                    Scroller = true,
+                    ScrollY = "350px",
+                    ServerSide = false
+                };
 
             var identifier = $"Table.create";
 
