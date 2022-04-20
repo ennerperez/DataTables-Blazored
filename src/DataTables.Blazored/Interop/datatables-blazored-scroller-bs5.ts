@@ -1,0 +1,1 @@
+import 'datatables.net-scroller-bs5/js/scroller.bootstrap5';

@@ -19,10 +19,12 @@
     This is an example of using Blazored Table in its most simplistic form.
 </p>
 
-<DataTable Columns="Columns" OnLoad="GetData" ColumnsDefs="ColumnsDefs" OnRowSelected="RowSelected" @ref="_table"/>
+<DataTable Columns="Columns" Settings="Settings" OnLoad="GetData" ColumnsDefs="ColumnsDefs" OnRowSelected="RowSelected" @ref="_table" />
 
 @code {
 
+    public TableSettings Settings { get; set; }
+    
     public ObservableCollection<TableColumn> Columns { get; set; }
     public ObservableCollection<TableColumnDefs> ColumnsDefs { get; set; }
     public Expression<Func<Employee, object>> Selector { get; set; }
@@ -30,7 +32,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-
         Selector = s => new {s.Id, s.FirstName, s.LastName, s.Office, s.Position, s.StartDate, s.Salary};
 
         var columns = typeof(Employee).GetProperties().Select(m => new
@@ -43,6 +44,18 @@
         Columns = new ObservableCollection<TableColumn>(columns.Select(m => new TableColumn() {Title = m.Display, Data = m.Data, Name = m.Name, Format = m.Format}));
         //ColumnsDefs = new ObservableCollection<TableColumnDefs>();
         //ColumnsDefs.Add(new TableColumnDefs() { Data = null, ClassName = "TEST", DefaultContent = "<a class='btn btn-sm btn-primary'>Test</a>", Targets = "6", Visible = true });
+        
+        Settings = Settings = new TableSettings()
+        {
+            Columns = Columns,
+            ColumnsDefs = ColumnsDefs,
+            Ordering = true,
+            DeferRender = true,
+            Scroller = true,
+            ScrollY = "350px",
+            ServerSide = false
+        };
+        
         await base.OnInitializedAsync();
     }
 

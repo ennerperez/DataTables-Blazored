@@ -1,7 +1,6 @@
 const path = require('path');
 
 module.exports = env => {
-
     return {
         entry: {
             'datatables-blazored' :'./Interop/datatables-blazored.ts',
