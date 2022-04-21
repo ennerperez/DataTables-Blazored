@@ -62,6 +62,9 @@
     <Compile Update="DataTable.razor.cs">
       <DependentUpon>DataTable.razor</DependentUpon>
     </Compile>
+    <Compile Update="Column.razor.cs">
+      <DependentUpon>Column.razor</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
