@@ -9,31 +9,31 @@ namespace DataTables.Blazored
 {
     public partial class DataTable : IDisposable
     {
-        [Inject]
-        private IJSRuntime JsRuntime { get; set; }
+        [Inject] private IJSRuntime JsRuntime { get; set; }
 
         public string Id { get; set; } = string.Empty;
 
-        [Parameter]
-        public Func<TableRequestViewModel, Task<TableResult>> OnLoad { get; set; }
+        [Parameter] public Func<TableRequestViewModel, Task<TableResult>> OnLoad { get; set; }
 
-        [Parameter]
+        [Parameter] public Func<object, Task<bool>> OnRowSelected { get; set; }
+
+        [Parameter] 
         public IEnumerable<object> DataSource { get; set; }
-
+        
         [Parameter]
         public List<Column> Columns { get; set; }
 
-        [Parameter]
-        public TableSettings Settings { get; set; }
+        [Parameter] public IEnumerable<TableColumn> Columns { get; set; }
 
-        [Parameter]
-        public string Url { get; set; } = string.Empty;
+        [Parameter] public IEnumerable<TableColumnDefs> ColumnsDefs { get; set; }
 
-        [Parameter]
-        public string Type { get; set; } = "POST";
+        [Parameter] public TableSettings Settings { get; set; }
 
-        [Parameter]
-        public string ContentType { get; set; } = "application/json";
+        [Parameter] public string Url { get; set; } = string.Empty;
+
+        [Parameter] public string Type { get; set; } = "POST";
+
+        [Parameter] public string ContentType { get; set; } = "application/json";
 
         private DotNetObjectReference<DataTable> _objRef;
 
@@ -56,6 +56,12 @@ namespace DataTables.Blazored
             return await OnLoad(tableRequest);
         }
 
+        [JSInvokable]
+        public async Task<bool> OnRowSelectedAsync(object tableRequest)
+        {
+            return await OnRowSelected(tableRequest);
+        }
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
@@ -72,11 +78,13 @@ namespace DataTables.Blazored
                 Settings = new TableSettings()
                 {
                     Columns = Columns,
+                    ColumnsDefs = ColumnsDefs,
                     Ordering = true,
                     DeferRender = true,
                     Scroller = true,
                     ScrollY = "350px",
-                    ServerSide = false
+                    ServerSide = false,
+                    //Responsive = true,
                 };
 
             var identifier = $"Table.create";
@@ -86,7 +94,7 @@ namespace DataTables.Blazored
                 if (OnLoad != null)
                 {
                     Settings.ServerSide = true;
-                    if(_objRef == null)
+                    if (_objRef == null)
                         _objRef = DotNetObjectReference.Create(this);
                     await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, null, null, _objRef);
                 }
@@ -113,4 +121,5 @@ namespace DataTables.Blazored
             _objRef?.Dispose();
         }
     }
+
 }

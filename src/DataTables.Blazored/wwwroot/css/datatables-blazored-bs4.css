@@ -1,0 +1,14 @@
+@import "datatables.net-bs4/css/dataTables.bootstrap4.css";
+@import "datatables.net-buttons-bs4/css/buttons.bootstrap4.css";
+@import "datatables.net-colreorder-bs4/css/colReorder.bootstrap4.css";
+@import "datatables.net-fixedcolumns-bs4/css/fixedColumns.bootstrap4.css";
+@import "datatables.net-fixedheader-bs4/css/fixedHeader.bootstrap4.css";
+@import "datatables.net-keytable-bs4/css/keyTable.bootstrap4.css";
+@import "datatables.net-responsive-bs4/css/responsive.bootstrap4.css";
+@import "datatables.net-rowgroup-bs4/css/rowGroup.bootstrap4.css";
+@import "datatables.net-rowreorder-bs4/css/rowReorder.bootstrap4.css";
+@import "datatables.net-scroller-bs4/css/scroller.bootstrap4.css";
+@import "datatables.net-searchbuilder-bs4/css/searchBuilder.bootstrap4.css";
+@import "datatables.net-searchpanes-bs4/css/searchPanes.bootstrap4.css";
+@import "datatables.net-staterestore-bs4/css/stateRestore.bootstrap4.css";
+@import "datatables.net-select-bs4/css/select.bootstrap4.css";

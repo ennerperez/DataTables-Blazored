@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import DataTables from 'datatables.net';
 import Settings = DataTables.Settings;
+import ColumnSettings = DataTables.ColumnSettings;
 
 import "datatables.net-autofill";
 import "datatables.net-buttons";
@@ -20,7 +21,10 @@ import "datatables.net-select";
 export class Table {
     
     private table: any = null;
-    private tableRef: any = null;
+    //private tableRef: any = null;
+    static tableRef: any = null;
+
+    static rowsSelected: any = [];
 
     public create(id: string, options: Settings, ajax: any, data: any, dotNet: any): void {
         this.table = $(`#${id}`);
@@ -35,21 +39,44 @@ export class Table {
            ajax.data = function (s: any) {
                return JSON.stringify(s);
            };
-           options.ajax = ajax;
+            options.ajax = ajax;
         }
         else if (data != null) {
            options.data = data;
         }
 
-        this.tableRef = this.table.DataTable(options);
+        /*if (options.columns !== null) {
+            let cs: ColumnSettings = {
+                defaultContent: ""
+            }
+
+            options.columns?.push(cs)
+        } */
+
+        Table.tableRef = this.table.DataTable(options);
+
+        Table.tableRef.on("click", "tbody tr", (f: Event) => {
+            const data: any = Table.tableRef.row(f.currentTarget).data();
+
+            if (f.currentTarget !== null) {
+                Table.tableRef.$('tr.selected').removeClass('selected');
+                (<Element>f.currentTarget).classList.add('selected');
+            }
+
+            Table.selectRow(data, dotNet);
+        });
     }
 
     public reload(): void {
-        this.tableRef.ajax.reload();
+        Table.tableRef.ajax.reload();
     }
 
     private static async loadInfoFromServer(data: object, dotNet: any): Promise<any> {
         return await dotNet.invokeMethodAsync('OnLoadAsync', data);
+    }
+
+    private static async selectRow(data: object, dotNet: any): Promise<any> {
+        return await dotNet.invokeMethodAsync('OnRowSelectedAsync', data);
     }
 }
 
