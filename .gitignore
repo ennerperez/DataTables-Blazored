@@ -331,3 +331,5 @@ ASALocalRun/
 .mfractor/
 
 .vscode/
+**/wwwroot/lib
+**/wwwroot/*.LICENSE.txt

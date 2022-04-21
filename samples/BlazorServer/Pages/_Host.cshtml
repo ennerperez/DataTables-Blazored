@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>DataTable Blazored (Server)</title>
     <base href="~/"/>
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css"/>
-    <link href="_content/DataTables.Blazored/css/datatables-blazored.css" rel="stylesheet"/>
+    <link href="lib/bs5/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="css/site.css" rel="stylesheet"/>
 </head>
 <body>
@@ -23,8 +22,13 @@
             document.write('<script src="js/blazor.polyfill.min.js"><\/script>');
         }
 </script>
+<script src="lib/jquery/jquery.min.js"></script>
+<script src="lib/bs5/js/bootstrap.min.js"></script>
+
 <script src="_framework/blazor.server.js"></script>
-<script src="_content/DataTables.Blazored/js/datatables-blazored.js"></script>
-<script src="_content/DataTables.Blazored/js/datatables-blazored-bs4.js"></script>
+
+<script src="_content/DataTables.Blazored/datatables-blazored.js"></script>
+<script src="_content/DataTables.Blazored/datatables-blazored-bs5.js"></script>
+
 </body>
 </html>

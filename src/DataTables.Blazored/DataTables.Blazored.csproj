@@ -69,10 +69,13 @@
     <None Include="package-lock.json" />
     <None Include="package.json" />
     <None Include="tsconfig.json" />
+    <None Include="wwwroot\ts\datatables-blazored-bs4.ts" />
+    <None Include="wwwroot\ts\datatables-blazored-bs5.ts" />
+    <None Include="wwwroot\ts\datatables-blazored.ts" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\js" />
+    <Folder Include="Interop" />
   </ItemGroup>
   
 </Project>

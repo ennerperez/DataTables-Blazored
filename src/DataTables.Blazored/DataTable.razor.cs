@@ -117,4 +117,5 @@ namespace DataTables.Blazored
             _objRef?.Dispose();
         }
     }
+
 }

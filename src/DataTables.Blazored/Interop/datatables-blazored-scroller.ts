@@ -1,1 +1,0 @@
-import 'datatables.net-scroller/js/dataTables.scroller';
