@@ -70,5 +70,9 @@
     <None Include="package.json" />
     <None Include="tsconfig.json" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\js" />
+  </ItemGroup>
   
 </Project>
