@@ -24,14 +24,14 @@ namespace BlazorServer.Services
             _context = context;
         }
 
-        public async Task<TableResult> GetDataAsync<TResult>(TableRequestViewModel model, Expression<Func<Employee, TResult>> selector = null)
+        public async Task<Result> GetDataAsync<TResult>(Request model, Expression<Func<Employee, TResult>> selector = null)
         {
             var dbSet = _context.Set<Employee>();
             object rows;
 
             var props = typeof(Employee).GetProperties().ToArray();
             var orderBy = new Dictionary<string, string>();
-            foreach (var item in model.Order)
+            foreach (var item in model.Orders)
             {
                 var column = model.Columns[item.Column];
                 var prop = props.FirstOrDefault(m => m.Name.ToLower() == column.Name.ToLower());
@@ -43,15 +43,15 @@ namespace BlazorServer.Services
             Expression predicate = null;
             ParameterExpression parameter;
 
-            var filters = model.Columns.Where(m => m.Searchable && m.Search != null && !string.IsNullOrWhiteSpace(m.Search.Value))
-                .Select(column =>
-                {
-                    var prop = props.FirstOrDefault(m => m.Name.ToLower() == column.Name.ToLower());
-                    if (prop != null)
-                        return new {Property = prop, column.Name, column.Search.Value};
-
-                    return null;
-                });
+            // var filters = model.Columns.Where(m => m.Searchable && m.Search != null && !string.IsNullOrWhiteSpace(m.Search.Value))
+            //     .Select(column =>
+            //     {
+            //         var prop = props.FirstOrDefault(m => m.Name.ToLower() == column.Name.ToLower());
+            //         if (prop != null)
+            //             return new {Property = prop, column.Name, column.Search.Value};
+            //
+            //         return null;
+            //     });
 
             var args = ((NewExpression)selector.Body).Arguments.OfType<MemberExpression>().ToArray();
 
@@ -68,39 +68,39 @@ namespace BlazorServer.Services
             parameter = NestedMember(args.First());
 
             ConstantExpression constant;
-            foreach (var filter in filters)
-            {
-                foreach (var item in args.Where(m => filter != null && m.Member.Name.ToLower() == filter.Name.ToLower()))
-                {
-                    var type = filter.Property.PropertyType;
-                    object value = null;
-                    try
-                    {
-                        value = Convert.ChangeType(filter.Value, type);
-                    }
-                    catch (Exception)
-                    {
-                        // ignore
-                    }
-
-                    if (value != null && value != type.GetDefault())
-                    {
-                        constant = Expression.Constant(value);
-                        var methods = new[] {"Contains", "Equals", "CompareTo"};
-                        foreach (var method in methods)
-                        {
-                            var methodInfo = type.GetMethod(method, new[] {type});
-                            if (methodInfo != null)
-                            {
-                                var member = item;
-                                var callExp = Expression.Call(member, methodInfo, constant);
-                                predicate = predicate == null ? (Expression)callExp : Expression.AndAlso(predicate, callExp);
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
+            // foreach (var filter in filters)
+            // {
+            //     foreach (var item in args.Where(m => filter != null && m.Member.Name.ToLower() == filter.Name.ToLower()))
+            //     {
+            //         var type = filter.Property.PropertyType;
+            //         object value = null;
+            //         try
+            //         {
+            //             value = Convert.ChangeType(filter.Value, type);
+            //         }
+            //         catch (Exception)
+            //         {
+            //             // ignore
+            //         }
+            //
+            //         if (value != null && value != type.GetDefault())
+            //         {
+            //             constant = Expression.Constant(value);
+            //             var methods = new[] {"Contains", "Equals", "CompareTo"};
+            //             foreach (var method in methods)
+            //             {
+            //                 var methodInfo = type.GetMethod(method, new[] {type});
+            //                 if (methodInfo != null)
+            //                 {
+            //                     var member = item;
+            //                     var callExp = Expression.Call(member, methodInfo, constant);
+            //                     predicate = predicate == null ? (Expression)callExp : Expression.AndAlso(predicate, callExp);
+            //                     break;
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
 
             Expression<Func<Employee, bool>> expression = null;
             if (predicate != null)
@@ -123,7 +123,7 @@ namespace BlazorServer.Services
             var isFiltered = (model.Search != null && !string.IsNullOrWhiteSpace(model.Search.Value));
             var stotal = isFiltered ? data.Count : total;
 
-            return new TableResult {iTotalRecords = total, iTotalDisplayRecords = stotal, aaData = data};
+            return new Result {iTotalRecords = total, iTotalDisplayRecords = stotal, aaData = data};
         }
     }
 

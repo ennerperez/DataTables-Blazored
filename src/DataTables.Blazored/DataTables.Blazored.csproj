@@ -62,20 +62,21 @@
     <Compile Update="DataTable.razor.cs">
       <DependentUpon>DataTable.razor</DependentUpon>
     </Compile>
+    <Compile Update="Column.razor.cs">
+      <DependentUpon>Column.razor</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <None Include="icon.png" Pack="true" PackagePath="\" />
-    <None Include="package-lock.json" />
+    <None Include="package-lock.json">
+      <DependentUpon>package.json</DependentUpon>
+    </None>
     <None Include="package.json" />
     <None Include="tsconfig.json" />
     <None Include="wwwroot\ts\datatables-blazored-bs4.ts" />
     <None Include="wwwroot\ts\datatables-blazored-bs5.ts" />
     <None Include="wwwroot\ts\datatables-blazored.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Interop" />
   </ItemGroup>
   
 </Project>

@@ -3,21 +3,6 @@ import DataTables from 'datatables.net';
 import Settings = DataTables.Settings;
 import ColumnSettings = DataTables.ColumnSettings;
 
-import "datatables.net-autofill";
-import "datatables.net-buttons";
-import "datatables.net-colreorder";
-import "datatables.net-fixedcolumns";
-import "datatables.net-fixedheader";
-import "datatables.net-keytable";
-import "datatables.net-responsive";
-import "datatables.net-rowgroup";
-import "datatables.net-rowreorder";
-import "datatables.net-scroller";
-import "datatables.net-searchbuilder";
-import "datatables.net-searchpanes";
-import "datatables.net-staterestore";
-import "datatables.net-select";
-
 export class Table {
     
     private table: any = null;
@@ -25,10 +10,36 @@ export class Table {
     static tableRef: any = null;
 
     static rowsSelected: any = [];
+    
+    private static assignCallback(callback: any){
+        if (callback == null || callback.namespace == null || callback.function == null) {
+            return undefined;
+        }
+
+        const namespace = window[callback.namespace];
+        if (namespace === null || namespace === undefined) {
+            return undefined;
+        }
+
+        const func = namespace[callback.function];
+        if (typeof func === 'function') {
+            return func;
+        } else {
+            return undefined;
+        }
+    }
 
     public create(id: string, options: Settings, ajax: any, data: any, dotNet: any): void {
         this.table = $(`#${id}`);
 
+        if (options.columns != null) {
+            for (let i = 0; i < options.columns.length; i++) {
+                const col = options.columns[i];
+                col.createdCell = Table.assignCallback(col.createdCell);
+                col.render = Table.assignCallback(col.render);
+            }
+        }
+        
         if (dotNet !== null) {
            options.ajax = (data: object, callback: ((data: any) => void), settings: DataTables.SettingsLegacy) => {
                let result = Table.loadInfoFromServer(data, dotNet);
@@ -69,6 +80,10 @@ export class Table {
 
     public reload(): void {
         Table.tableRef.ajax.reload();
+    }
+
+    public destroy(): void {
+        Table.tableRef.destroy();
     }
 
     private static async loadInfoFromServer(data: object, dotNet: any): Promise<any> {

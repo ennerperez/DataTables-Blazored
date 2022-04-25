@@ -3,35 +3,37 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 using DataTables.Blazored.Models;
 
 namespace DataTables.Blazored
 {
     public partial class DataTable : IDisposable
     {
+        public DataTable()
+        {
+            Columns = new List<Column>();
+        }
+
+        [Parameter] public RenderFragment ChildContent { get; set; }
+
         [Inject] private IJSRuntime JsRuntime { get; set; }
 
         public string Id { get; set; } = string.Empty;
 
-        [Parameter] public Func<TableRequestViewModel, Task<TableResult>> OnLoad { get; set; }
-
+        [Parameter] public Func<Request, Task<Result>> OnLoad { get; set; }
         [Parameter] public Func<object, Task<bool>> OnRowSelected { get; set; }
-
         [Parameter] public IEnumerable<object> DataSource { get; set; }
 
-        [Parameter] public IEnumerable<TableColumn> Columns { get; set; }
-
-        [Parameter] public IEnumerable<TableColumnDefs> ColumnsDefs { get; set; }
-
-        [Parameter] public TableSettings Settings { get; set; }
-
+        [Parameter] public IEnumerable<Definition> ColumnsDefs { get; set; }
+        [Parameter] public Settings Settings { get; set; }
         [Parameter] public string Url { get; set; } = string.Empty;
-
         [Parameter] public string Type { get; set; } = "POST";
-
         [Parameter] public string ContentType { get; set; } = "application/json";
 
         private DotNetObjectReference<DataTable> _objRef;
+
+        [Parameter] public List<Column> Columns { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -47,9 +49,9 @@ namespace DataTables.Blazored
         }
 
         [JSInvokable]
-        public async Task<TableResult> OnLoadAsync(TableRequestViewModel tableRequest)
+        public async Task<Result> OnLoadAsync(Request request)
         {
-            return await OnLoad(tableRequest);
+            return await OnLoad(request);
         }
 
         [JSInvokable]
@@ -70,28 +72,27 @@ namespace DataTables.Blazored
 
         private async Task InitializeTable()
         {
-            if (Settings == null)
-                Settings = new TableSettings()
-                {
-                    Columns = Columns,
-                    ColumnsDefs = ColumnsDefs,
-                    Ordering = true,
-                    DeferRender = true,
-                    Scroller = true,
-                    ScrollY = "350px",
-                    ServerSide = false,
-                    //Responsive = true,
-                };
-
+            Settings ??= new Settings();
+            Settings.Columns = Columns.Select(m => new
+            {
+                m.Data,
+                m.Name,
+                m.Title,
+                m.Visible,
+                m.Orderable,
+                m.Searchable,
+                m.Type,
+                m.Width,
+                m.Render,
+                m.CreatedCell
+            }).ToList();
             var identifier = $"Table.create";
-
             if (Settings.Columns != null)
             {
                 if (OnLoad != null)
                 {
                     Settings.ServerSide = true;
-                    if (_objRef == null)
-                        _objRef = DotNetObjectReference.Create(this);
+                    _objRef ??= DotNetObjectReference.Create(this);
                     await JsRuntime.InvokeVoidAsync(identifier, Id, Settings, null, null, _objRef);
                 }
                 else if (DataSource != null)
@@ -117,5 +118,4 @@ namespace DataTables.Blazored
             _objRef?.Dispose();
         }
     }
-
 }

@@ -19,7 +19,7 @@ namespace BlazorServer.Controllers
         }
 
         [HttpPost("Data")]
-        public async Task<IActionResult> Data([FromBody] TableRequestViewModel model)
+        public async Task<IActionResult> Data([FromBody] Request model)
         {
             var data = await _employeeRepository.GetDataAsync<object>(model, s => new
             {
@@ -28,7 +28,8 @@ namespace BlazorServer.Controllers
                 s.LastName,
                 s.Office,
                 s.Position,
-                s.StartDate
+                s.StartDate,
+                s.Salary
             });
             return new JsonResult(data);
         }

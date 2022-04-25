@@ -1,6 +1,6 @@
 ﻿namespace DataTables.Blazored.Models
 {
-    public class ColumnOrderViewModel
+    public class Order
     {
         public int Column { get; set; }
 

@@ -9,6 +9,6 @@ namespace BlazorServer.Interfaces
 {
     public interface IEmployeeRepository
     {
-        Task<TableResult> GetDataAsync<TResult>([FromBody] TableRequestViewModel model, Expression<Func<Employee, TResult>> selector = null);
+        Task<Result> GetDataAsync<TResult>([FromBody] Request model, Expression<Func<Employee, TResult>> selector = null);
     }
 }

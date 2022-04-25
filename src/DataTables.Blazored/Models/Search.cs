@@ -1,6 +1,6 @@
 ﻿namespace DataTables.Blazored.Models
 {
-    public class SearchViewModel
+    public class Search
     {
         public string Value { get; set; }
 

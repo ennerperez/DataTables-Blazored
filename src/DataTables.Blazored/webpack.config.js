@@ -4,9 +4,10 @@ const path = require('path');
 //module.exports = env => {
 module.exports = {
         entry: {
-            'datatables-blazored.js' : ['./wwwroot/ts/datatables-blazored.ts','./wwwroot/css/datatables-blazored.css'],
-            'datatables-blazored-bs4.js' : ['./wwwroot/ts/datatables-blazored-bs4.ts','./wwwroot/css/datatables-blazored-bs4.css'],
-            'datatables-blazored-bs5.js' : ['./wwwroot/ts/datatables-blazored-bs5.ts', './wwwroot/css/datatables-blazored-bs5.css'],
+            'datatables-blazored.js' : ['./wwwroot/ts/datatables-blazored.ts'],
+            // 'datatables-blazored-bs4.js' : ['./wwwroot/ts/datatables-blazored-bs4.ts'],
+            // 'datatables-blazored-bs5.js' : ['./wwwroot/ts/datatables-blazored-bs5.ts'],
+            // 'datatables-blazored-extensions.js' : ['./wwwroot/ts/datatables-blazored-extensions.ts'],
             // 'datatables-blazored.css' :'./wwwroot/css/datatables-blazored.css',
             // 'datatables-blazored-bs4.css' :'./wwwroot/css/datatables-blazored-bs4.css',
             // 'datatables-blazored-bs5.css' :'./wwwroot/css/datatables-blazored-bs5.css',
