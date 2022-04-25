@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DataTables.Blazored.Models
 {
-    public class TableColumnDefs
+    [Obsolete]
+    public class Definition
     {
         public string Targets { get; set; }
 

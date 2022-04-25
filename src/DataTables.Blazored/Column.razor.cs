@@ -1,11 +1,17 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Components;
 using DataTables.Blazored.Interop;
-using Microsoft.AspNetCore.Components;
 
 namespace DataTables.Blazored
 {
     public partial class Column
     {
+
+        public Column()
+        {
+            Searchable = true;
+            Orderable = true;
+            Visible = true;
+        }
         
         [CascadingParameter]
         public DataTable Table { get; set; }
@@ -21,40 +27,40 @@ namespace DataTables.Blazored
 
         [Parameter]
         public string DefaultContent { get; set; }
-
+        
         [Parameter]
         public string ClassName { get; set; }
-
+        
         [Parameter]
         public string CellType { get; set; }
-
+        
         [Parameter]
         public string ContentPadding { get; set; }
-
+        
         [Parameter]
-        public bool? Searchable { get; set; }
-
+        public bool Searchable { get; set; }
+        
         [Parameter]
-        public bool? Orderable { get; set; }
-
+        public bool Orderable { get; set; }
+        
         [Parameter]
         public string OrderData { get; set; }
-
+        
         [Parameter]
         public string OrderDataType { get; set; }
-
+        
         [Parameter]
-        public JavaScriptFunction CreatedCell { get; set; }
-
+        public JSFunction CreatedCell { get; set; }
+        
         [Parameter]
-        public JavaScriptFunction Render { get; set; }
-
+        public JSFunction Render { get; set; }
+        
         [Parameter]
         public string Type { get; set; }
-
+        
         [Parameter]
-        public bool? Visible { get; set; }
-
+        public bool Visible { get; set; }
+        
         [Parameter]
         public string Width { get; set; }
 

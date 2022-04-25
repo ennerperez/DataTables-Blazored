@@ -1,6 +1,6 @@
 ﻿namespace DataTables.Blazored.Models
 {
-    public class ColumnFilterViewModel
+    public class Filter
     {
         public string Column { get; set; }
 

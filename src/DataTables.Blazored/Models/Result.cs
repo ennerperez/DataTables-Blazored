@@ -2,11 +2,11 @@
 
 namespace DataTables.Blazored.Models
 {
-    public class TableResult : TableResult<object>
+    public class Result : Result<object>
     {
     }
 
-    public class TableResult<T> where T : class
+    public class Result<T> where T : class
     {
         // ReSharper disable once InconsistentNaming
         public int iTotalRecords { get; set; }

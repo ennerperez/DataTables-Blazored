@@ -13,12 +13,20 @@
     This is an example of using Blazored Table with Ajax source.
 </p>
 
-<DataTable Url="/api/Employee/Data" Type="POST" ContentType="application/json" Columns="Columns" @ref="_table"/>
+<DataTable Url="/api/Employee/Data" Type="POST" ContentType="application/json" @ref="_table">
+    <Column Title="Id" Name="Id" Data="id" Visible="false"/>
+    <Column Title="First Name" Name="FirstName" Data="firstName"/>
+    <Column Title="Last Name" Name="LastName" Data="lastName"/>
+    <Column Title="Office" Name="Office" Data="office"/>
+    <Column Title="Position" Name="Position" Data="position"/>
+    <Column Title="Start Date" Name="StartDate" Data="startDate"/>
+    <Column Title="Salary" Name="Salary" Data="salary"/>
+</DataTable>
 
 @code {
 
-    public ObservableCollection<TableColumn> Columns { get; set; }
-    
+    //public ObservableCollection<TableColumn> Columns { get; set; }
+
     private DataTable _table;
 
     [Parameter]
@@ -26,14 +34,14 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var columns = typeof(Employee).GetProperties().Select(m => new
-        {
-            m.Name,
-            Data = char.ToLower(m.Name[0]) + m.Name.Substring(1),
-            Display = m.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? m.Name,
-            Format = "" //m.GetCustomAttribute<DisplayFormatAttribute>()?.DataFormatString ?? "{0:0.00}",
-        });
-        Columns = new ObservableCollection<TableColumn>(columns.Select(m => new TableColumn() {Title = m.Display, Data = m.Data, Name = m.Name, Format = m.Format}));
+    // var columns = typeof(Employee).GetProperties().Select(m => new
+    // {
+    //     m.Name,
+    //     Data = char.ToLower(m.Name[0]) + m.Name.Substring(1),
+    //     Display = m.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? m.Name,
+    //     Format = "" //m.GetCustomAttribute<DisplayFormatAttribute>()?.DataFormatString ?? "{0:0.00}",
+    // });
+    // Columns = new ObservableCollection<TableColumn>(columns.Select(m => new TableColumn() {Title = m.Display, Data = m.Data, Name = m.Name, Format = m.Format}));
 
         await base.OnInitializedAsync();
     }

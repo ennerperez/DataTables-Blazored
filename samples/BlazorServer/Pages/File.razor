@@ -15,18 +15,26 @@
     This is an example of using Blazored Table with file source.
 </p>
 
-<DataTable Columns="Columns" DataSource="Employees" @ref="_table" />
+<DataTable DataSource="Employees" @ref="_table">
+    <Column Title="Id" Name="Id" Data="id" Visible="false"/>
+    <Column Title="First Name" Name="FirstName" Data="firstName"/>
+    <Column Title="Last Name" Name="LastName" Data="lastName"/>
+    <Column Title="Office" Name="Office" Data="office"/>
+    <Column Title="Position" Name="Position" Data="position"/>
+    <Column Title="Start Date" Name="StartDate" Data="startDate"/>
+    <Column Title="Salary" Name="Salary" Data="salary"/>
+</DataTable>
 
 @code {
 
-    public ObservableCollection<TableColumn> Columns { get; set; }
+
     public Expression<Func<Employee, object>> Selector { get; set; }
-    
+
     private DataTable _table;
-    
+
     [Parameter]
     public ObservableCollection<object> Employees { get; set; }
-    
+
     protected override async Task OnInitializedAsync()
     {
         var dir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "employees.json");
@@ -34,17 +42,18 @@
         var data = Newtonsoft.Json.JsonConvert.DeserializeObject<IEnumerable<Employee>>(json);
         if (data != null) Employees = new ObservableCollection<object>(data);
 
-        Selector = s => new {s.Id, s.FirstName, s.LastName, s.Office, s.Position, s.StartDate, s.Salary};
+        Selector = s => new { s.Id, s.FirstName, s.LastName, s.Office, s.Position, s.StartDate, s.Salary };
 
-        var columns = typeof(Employee).GetProperties().Select(m => new
-        {
-            m.Name,
-            Data = char.ToLower(m.Name[0]) + m.Name.Substring(1),
-            Display = m.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? m.Name,
-            Format = "" //m.GetCustomAttribute<DisplayFormatAttribute>()?.DataFormatString ?? "{0:0.00}",
-        });
-        Columns = new ObservableCollection<TableColumn>(columns.Select(m => new TableColumn() {Title = m.Display, Data = m.Data, Name = m.Name, Format = m.Format}));
+    // var columns = typeof(Employee).GetProperties().Select(m => new
+    // {
+    //     m.Name,
+    //     Data = char.ToLower(m.Name[0]) + m.Name.Substring(1),
+    //     Display = m.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? m.Name,
+    //     Format = "" //m.GetCustomAttribute<DisplayFormatAttribute>()?.DataFormatString ?? "{0:0.00}",
+    // });
+    // Columns = new ObservableCollection<TableColumn>(columns.Select(m => new TableColumn() {Title = m.Display, Data = m.Data, Name = m.Name, Format = m.Format}));
 
         await base.OnInitializedAsync();
     }
+
 }
